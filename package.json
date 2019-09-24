@@ -1,0 +1,39 @@
+{
+  "name": "create-next-example-app",
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "NODE_ENV=production node ./server/index.js"
+  },
+  "dependencies": {
+    "await-wrap": "^0.1.0",
+    "graphql": "^14.0.2",
+    "next": "^7.0.2",
+    "react": "^16.6.3",
+    "react-amap": "^1.2.8",
+    "react-dom": "^16.6.3"
+  },
+  "devDependencies": {
+    "@zeit/next-sass": "~1.0.1",
+    "antd-mobile": "~2.2.6",
+    "apollo-server-express": "~2.2.2",
+    "body-parser": "~1.18.3",
+    "cors": "~2.8.5",
+    "express": "~4.16.4",
+    "immutable": "~4.0.0-rc.12",
+    "isomorphic-unfetch": "~3.0.0",
+    "lodash": "~4.17.11",
+    "moment": "~2.22.2",
+    "next-compose-plugins": "~2.1.1",
+    "next-manifest": "~1.6.0",
+    "next-offline": "~3.2.1",
+    "next-redux-wrapper": "~2.0.0",
+    "next-style-loader": "~0.3.1",
+    "nprogress": "~0.2.0",
+    "react-redux": "~5.1.1",
+    "redux": "~4.0.1",
+    "redux-devtools-extension": "~2.13.5",
+    "redux-immutable": "~3.1.0",
+    "redux-thunk": "~2.3.0"
+  }
+}

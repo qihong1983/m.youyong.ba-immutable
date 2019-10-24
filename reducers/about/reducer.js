@@ -14,6 +14,8 @@ const About = (state, action) => {
         })
     }
 
+
+    //http://youyong.ba:8080/mock/5d8c57403908d745b308239c/example/cname
     switch (action.type) {
         case "ABOUT_TABLEDATA":
 

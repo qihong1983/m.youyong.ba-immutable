@@ -36,37 +36,28 @@ import {
 import Head from '../components/head'
 import Nav from '../components/nav'
 
-import styled,{ createGlobalStyle } from 'styled-components';
+import styled,{ createGlobalStyle,extend } from 'styled-components';
+
+
 
 // const TooltipStyle = createGlobalStyle`
 //   .ant-tooltip-inner {
 //     color: #545A69;
 //   }
 // `
-
-const StyledDiv = createGlobalStyle`
-  background: yellow;
-  .am-navbar {
-    background: yellow;
-  }
-
-  .am-notice-bar {
-    margin-top:50px;
-  }
-  .image img {
-    width: 100%;
-  }
-  .content {
-    min-height: 30em;
-    overflow: auto;
-  }
-  .content h2 {
-    font-size: 1.8em;
-    color: black;
-    margin-bottom: 1em;
-  }
+const test11 = styled.h1`
+    color:yellow;
 `;
-class Home extends Component {
+
+
+// const test22 = test11.extend`
+//     color:green;
+// `;
+
+const StyledDiv = styled(NavBar)`
+  background: yellow;
+`;
+class Test1 extends Component {
   // static getInitialProps({ store, isServer, pathname, query }) {
   //   store.dispatch({ type: 'FOO', payload: 'foo' }); // component will be able to read from store's state when rendered
   //   return { custom: 'custom' }; // you can pass some custom props to component from here
@@ -225,29 +216,13 @@ class Home extends Component {
         {/* <Nav /> */}
 
         <div className="hero">
-        <StyledDiv />
-          <NavBar icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>主页</NavBar>
+            <test11>afasdf</test11>
+          {/* <NavBar style={StyledDiv} icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>主页</NavBar> */}
           
 
-          {/* <StyledDiv icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>主页</StyledDiv> */}
+          <StyledDiv icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>主页</StyledDiv>
 
-          <Drawer
-            className="my-drawer"
-            style={{ minHeight: this.state.minHeight }}
-            enableDragHandle={false}
-            contentStyle={{ color: '#A6A6A6', textAlign: 'center' }}
-            sidebar={sidebar}
-            open={this.state.open}
-            onOpenChange={this.onOpenChange.bind(this)}
-          >
-            <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
-              Notice: 完美前端脚手架(使前端开发不在复杂)--pwa + ssr + data fetching + react + redux + code splitting + antd + 多人并行开发方式 + SPA 。 简单、易用、实用性超过阿里（umi）、京东(taro)、百度(百度fis)。不服来战
-          </NoticeBar>
-
-            {this.getListItem()}
-
-
-          </Drawer>
+         
 
         </div>
 
@@ -287,8 +262,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return bindActionCreators(actionCreators, dispatch);
 };
 // Home = connect()(Home);
-Home = connect(mapStateToProps, mapDispatchToProps)(Home);
+Test1 = connect(mapStateToProps, mapDispatchToProps)(Test1);
 
 // Home = withRedux(initializeStore)(Home);
 
-export default withRouter(Home);
+export default withRouter(Test1);

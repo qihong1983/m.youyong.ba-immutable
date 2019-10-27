@@ -40,6 +40,11 @@ const middleware = [thunk];
 
 console.log(middleware, 'middleware');
 
+import styled,{ createGlobalStyle } from 'styled-components';
+
+
+
+
 /**
 * @param {object} initialState 
 * @param {boolean} options.isServer indicates whether it is a server side or client side
@@ -87,7 +92,9 @@ class MyApp extends App {
         console.log(store, 'storestorestorestore');
         return (
             <Container>
+           
                 <Provider store={store}>
+             
                     <Component {...pageProps} />
                 </Provider>
             </Container>

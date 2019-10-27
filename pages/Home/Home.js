@@ -13,6 +13,8 @@ import {
 
 
 
+
+
 import {
     bindActionCreators
 } from 'redux';
@@ -24,6 +26,25 @@ import {
 
 
 import * as actionCreators from '../../actions/About/index';
+
+
+
+const StyledDiv = styled(Row)`
+  position: relative;
+  height: 100%;
+  .image img {
+    width: 100%;
+  }
+  .content {
+    min-height: 30em;
+    overflow: auto;
+  }
+  .content h2 {
+    font-size: 1.8em;
+    color: black;
+    margin-bottom: 1em;
+  }
+`;
 
 class About extends Component {
 

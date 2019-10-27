@@ -8,6 +8,8 @@ import {
     flush
 } from 'next-style-loader/applyStyles';
 
+
+
 export default class MyDocument extends Document {
 
     render() {
@@ -28,8 +30,10 @@ export default class MyDocument extends Document {
 
                 </Head>
                 <body>
+                  
                     <Main />
                     <NextScript />
+               
                 </body>
             </html>
         );

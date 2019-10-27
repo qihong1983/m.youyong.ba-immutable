@@ -44,8 +44,17 @@ import styled,{ createGlobalStyle } from 'styled-components';
 //   }
 // `
 
-const StyledDiv = createGlobalStyle`
+const DrawerStyled= styled(Drawer)`
+  position:relative;
+
+`
+
+const StyledDiv = styled(NavBar)`
   background: yellow;
+
+  /* background-color: #e56045; */
+    position: relative;
+    overflow: auto;
   .am-navbar {
     background: yellow;
   }
@@ -225,13 +234,13 @@ class Home extends Component {
         {/* <Nav /> */}
 
         <div className="hero">
-        <StyledDiv />
-          <NavBar icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>主页</NavBar>
+    
+          {/* <NavBar icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>主页</NavBar> */}
           
 
-          {/* <StyledDiv icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>主页</StyledDiv> */}
+          <StyledDiv icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>主页</StyledDiv>
 
-          <Drawer
+          <DrawerStyled
             className="my-drawer"
             style={{ minHeight: this.state.minHeight }}
             enableDragHandle={false}
@@ -247,7 +256,7 @@ class Home extends Component {
             {this.getListItem()}
 
 
-          </Drawer>
+          </DrawerStyled>
 
         </div>
 

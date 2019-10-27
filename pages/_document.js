@@ -7,27 +7,31 @@ import Document, {
 import {
     flush
 } from 'next-style-loader/applyStyles';
-
+import { ServerStyleSheet } from 'styled-components'
 
 
 export default class MyDocument extends Document {
 
+
+    
+
     render() {
-        const {
-            nextStyle
-        } = this.props;
+        // const {
+        //     nextStyle
+        // } = this.props;
 
-
+       
+        // console.log(this.props, 'thisthis###');
         return (
             <html>
                 <Head>
-                    {nextStyle.tag}
+                {/* {nextStyle.tag}   */}
                     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
                     <link rel="manifest" href="/static/manifest.json" />
                     <link href="/static/nprogress.min.css" rel="stylesheet" />
 
-                    <link rel="stylesheet" href="/static/demo.css" />
-
+                    {/* <link rel="stylesheet" href="/static/demo.css" /> */}
+                    {this.props.styleTags} 
                 </Head>
                 <body>
                   
@@ -42,10 +46,45 @@ export default class MyDocument extends Document {
 
 MyDocument.getInitialProps = function (ctx) {
 
-    // console.log(ctx);
+
+
+    console.log(ctx, 'ctx');
     const props = Document.getInitialProps(ctx);
+
+    // console.log(props);
 
     props.nextStyle = flush();
 
-    return props;
+    // console.log(2222222223);
+    // return props;
+
+
+    const sheet = new ServerStyleSheet()
+    const page = ctx.renderPage(App => props => sheet.collectStyles(<App {...props} />))
+    const styleTags = sheet.getStyleElement()
+    return { ...page,  styleTags }
+
+
+
+    // const sheet = new ServerStyleSheet();
+    // // 1.这里采用react里High Order Component的方式，可以重新包装APP和所有渲染的组件
+    // const originalRenderPage = ctx.renderPage;
+
+
+    // try{
+    //     ctx.renderPage = () =>
+    //         originalRenderPage({
+    //             enhanceApp: App => (props) => 
+    //                 // App挂载样式
+    //                 sheet.collectStyles(<App {...props} />)
+    //         })
+    //     // 因为覆盖了Document，所以要重新返回页面的props
+    //     const props = await Document.getInitialProps(ctx)
+    //     return {
+    //         ...props,
+    //         styles: <>{props.styles}{sheet.getStyleElement()}</>
+    //     }
+    // }finally{
+    //     sheet.seal()
+    // }     
 };

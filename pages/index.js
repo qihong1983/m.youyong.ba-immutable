@@ -23,20 +23,27 @@ import * as actionCreators from '../actions/About/index';
 import {
   Flex,
   WhiteSpace,
+  WingBlank,
+  SearchBar,
   Menu,
   ActivityIndicator,
   NavBar,
+  PullToRefresh,
   Drawer,
   List,
   NoticeBar,
   SwipeAction,
-  Icon
+  Pagination,
+  Icon,
+  TabBar
 } from 'antd-mobile';
 
 import Head from '../components/head'
 import Nav from '../components/nav'
 
 import styled,{ createGlobalStyle } from 'styled-components';
+import { relative, isAbsolute } from 'path';
+import { relativeTimeRounding } from 'moment';
 
 // const TooltipStyle = createGlobalStyle`
 //   .ant-tooltip-inner {
@@ -44,37 +51,9 @@ import styled,{ createGlobalStyle } from 'styled-components';
 //   }
 // `
 
-const DrawerStyled= styled(Drawer)`
-  position:relative;
 
-`
 
-const StyledDiv = styled(NavBar)`
-  background: yellow;
 
-  /* background-color: #e56045; */
-    position: relative;
-    overflow: auto;
-  .am-navbar {
-    background: yellow;
-  }
-
-  .am-notice-bar {
-    margin-top:50px;
-  }
-  .image img {
-    width: 100%;
-  }
-  .content {
-    min-height: 30em;
-    overflow: auto;
-  }
-  .content h2 {
-    font-size: 1.8em;
-    color: black;
-    margin-bottom: 1em;
-  }
-`;
 class Home extends Component {
   // static getInitialProps({ store, isServer, pathname, query }) {
   //   store.dispatch({ type: 'FOO', payload: 'foo' }); // component will be able to read from store's state when rendered
@@ -108,7 +87,8 @@ class Home extends Component {
 
     this.state = {
       open: false,
-      minHeight: '300px'
+      minHeight: '300px',
+      selectedTab: 'greenTab'
     }
   }
 
@@ -148,44 +128,33 @@ class Home extends Component {
 
           // this.props.index.About.tableData.map((v, k) => {
           this.props.index.toJS().tableData.map((v, k) => {
-            return (<SwipeAction
+            return (
+              
+            <SwipeAction
               style={{ backgroundColor: 'gray' }}
               autoClose
               right={[
                 {
-                  text: 'Cancel',
-                  onPress: () => console.log('cancel'),
-                  style: { backgroundColor: '#ddd', color: 'white' },
-                },
-                {
-                  text: 'Delete',
-                  onPress: () => console.log('delete'),
-                  style: { backgroundColor: '#F4333C', color: 'white' },
+                  text: '报名',
+                  onPress: () => console.log('报名'),
+                  style: { backgroundColor: '#e56045', color: 'white' },
                 },
               ]}
-              left={[
-                {
-                  text: 'Reply',
-                  onPress: () => console.log('reply'),
-                  style: { backgroundColor: '#108ee9', color: 'white' },
-                },
-                {
-                  text: 'Cancel',
-                  onPress: () => console.log('cancel'),
-                  style: { backgroundColor: '#ddd', color: 'white' },
-                },
-              ]}
+             
               onOpen={() => console.log('global open')}
               onClose={() => console.log('global close')}
             >
               <List.Item
-                extra="More"
+                // extra="可点击可滑动"
                 arrow="horizontal"
+                thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
                 onClick={e => console.log(e)}
               >
-                {v.cname}
+                {v.cname} <List.Item.Brief>subtitle</List.Item.Brief>
               </List.Item>
-            </SwipeAction>)
+            </SwipeAction>
+ 
+            )
           })
         }
 
@@ -194,6 +163,53 @@ class Home extends Component {
     );
   }
 
+
+  renderContent(pageText) {
+    return (
+      <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
+        
+
+         <div style={{ height: '100%' }}>
+         <NavBar>游泳吧主页</NavBar>
+       
+        <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
+              Notice: 完美前端脚手架(使前端开发不在复杂)--pwa + ssr + data fetching + react + redux + code splitting + antd + 多人并行开发方式 + SPA 。 简单、易用、实用性超过阿里（umi）、京东(taro)、百度(百度fis)。不服来战
+          </NoticeBar>
+
+        <SearchBar placeholder="结伴游"  showCancelButton maxLength={8} />
+        <PullToRefresh
+              damping={60}
+              ref={el => this.ptr = el}
+              style={{
+                height: this.state.height,
+                overflow: 'auto',
+              }}
+              indicator={{ deactivate: '上拉可以刷新' }}
+              direction={'down'}
+              refreshing={this.state.refreshing}
+              onRefresh={() => {
+                this.setState({ refreshing: true });
+                setTimeout(() => {
+                  this.setState({ refreshing: false });
+                }, 1000);
+              }}
+            >
+          {this.getListItem()}
+          </PullToRefresh>
+          {/* <WhiteSpace /> */}
+          <Pagination total={5}
+      className="custom-pagination-with-icon"
+      current={1}
+      locale={{
+        prevText: (<span className="arrow-align"><Icon type="left" style={{position:"relative",top:"5px"}} />上一步</span>),
+        nextText: (<span className="arrow-align">下一步<Icon type="right" style={{position:"relative",top:"5px"}} /></span>),
+      }}
+    /> 
+           </div>
+       
+      </div>
+    );
+  }
 
   render() {
     // const sidebar = (<List>
@@ -232,41 +248,108 @@ class Home extends Component {
       <div>
         <Head title="Home" />
         {/* <Nav /> */}
+        <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
+        <TabBar
+          unselectedTintColor="#949494"
+          tintColor="#33A3F4"
+          barTintColor="white"
+          hidden={this.state.hidden}
+          tabBarPosition={"bottom"}
+        >
 
-        <div className="hero">
-    
-          {/* <NavBar icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>主页</NavBar> */}
-          
-
-          <StyledDiv icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>主页</StyledDiv>
-
-          <DrawerStyled
-            className="my-drawer"
-            style={{ minHeight: this.state.minHeight }}
-            enableDragHandle={false}
-            contentStyle={{ color: '#A6A6A6', textAlign: 'center' }}
-            sidebar={sidebar}
-            open={this.state.open}
-            onOpenChange={this.onOpenChange.bind(this)}
+          <TabBar.Item
+            icon={
+              <div style={{
+                width: '22px',
+                height: '22px',
+                background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat' }}
+              />
+            }
+            selectedIcon={
+              <div style={{
+                width: '22px',
+                height: '22px',
+                background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat' }}
+              />
+            }
+            title="主页"
+            key="index"
+            dot
+            selected={this.state.selectedTab === 'greenTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'greenTab',
+              });
+            }}
           >
-            <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
-              Notice: 完美前端脚手架(使前端开发不在复杂)--pwa + ssr + data fetching + react + redux + code splitting + antd + 多人并行开发方式 + SPA 。 简单、易用、实用性超过阿里（umi）、京东(taro)、百度(百度fis)。不服来战
-          </NoticeBar>
+              {this.renderContent('Friend')}
+          </TabBar.Item>
 
-            {this.getListItem()}
-
-
-          </DrawerStyled>
-
-        </div>
-
-        <style jsx>{`
-      .hero {
-        color:red;
-      }
-      .am-navbar {
-        background-color: #e56045;
-      }
+          <TabBar.Item
+            icon={
+              <div style={{
+                width: '22px',
+                height: '22px',
+                background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat' }}
+              />
+            }
+            selectedIcon={
+              <div style={{
+                width: '22px',
+                height: '22px',
+                background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat' }}
+              />
+            }
+            title="发布"
+            key="send"
+            dot
+            selected={this.state.selectedTab === 'greenTab1'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'greenTab1',
+              });
+            }}
+          >
+              {this.renderContent('Friend')}
+          </TabBar.Item>
+          <TabBar.Item
+            icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
+            selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
+            title="个人中心"
+            key="my"
+            selected={this.state.selectedTab === 'yellowTab'}
+            onPress={() => {
+              this.setState({
+                selectedTab: 'yellowTab',
+              });
+            }}
+          >
+            {this.renderContent('My')}
+          </TabBar.Item>
+        </TabBar>
+      </div>
+      <style jsx>{`
+     .pagination-container {
+      margin: 0 15px;
+    }
+    
+    .custom-pagination-with-icon .am-pagination-wrap-btn-prev .am-button-inline{
+      padding-left: 0;
+      padding-right: 10px;
+    }
+    .custom-pagination-with-icon .am-pagination-wrap-btn-next .am-button-inline{
+      padding-left: 10px;
+      padding-right: 0;
+    }
+    .arrow-align {
+      display: flex;
+      align-items: center;
+    }
+    .sub-title {
+      color: #888;
+      font-size: 14px;
+      padding: 30px 0 18px 0;
+    }
     `}</style>
       </div>
     )

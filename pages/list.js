@@ -36,6 +36,49 @@ import {
 import Head from '../components/head'
 import Nav from '../components/nav'
 
+import styled,{ createGlobalStyle } from 'styled-components';
+
+// const TooltipStyle = createGlobalStyle`
+//   .ant-tooltip-inner {
+//     color: #545A69;
+//   }
+// `
+
+const DrawerStyled= styled(Drawer)`
+  position:relative;
+
+`
+
+const StyledDiv = styled(NavBar)`
+  background: blue;
+
+  .am-navbar-left {
+    background:green;
+  }
+  /* background-color: #e56045; */
+    position: relative;
+    overflow: auto;
+  .am-navbar {
+    background: yellow;
+  }
+
+  .am-notice-bar {
+    margin-top:50px;
+  }
+  .image img {
+    width: 100%;
+  }
+  .content {
+    min-height: 30em;
+    overflow: auto;
+  }
+  .content h2 {
+    font-size: 1.8em;
+    color: black;
+    margin-bottom: 1em;
+  }
+`;
+
 class Home extends Component {
     // static getInitialProps({ store, isServer, pathname, query }) {
     //   store.dispatch({ type: 'FOO', payload: 'foo' }); // component will be able to read from store's state when rendered
@@ -191,10 +234,12 @@ class Home extends Component {
 
                 <div className="hero">
 
-                    <NavBar icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>二级页</NavBar>
+                    {/* <NavBar icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>二级页</NavBar> */}
 
+                    <StyledDiv icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>二级页</StyledDiv>
+                    
 
-                    <Drawer
+                    <DrawerStyled
                         className="my-drawer"
                         style={{ minHeight: this.state.minHeight }}
                         enableDragHandle={false}
@@ -210,7 +255,7 @@ class Home extends Component {
                         {this.getListItem()}
 
 
-                    </Drawer>
+                    </DrawerStyled>
 
                 </div>
 

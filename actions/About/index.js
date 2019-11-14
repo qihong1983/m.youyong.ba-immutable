@@ -132,9 +132,20 @@ const getCharts = (data) => {
 
 }
 
+const setStartPage = (data) => {
+    return async function (dispatch) {
+
+        dispatch({
+            type: "ABOUT_STARTPAGE",
+            payload: data
+        })
+    }
+}
+
 export {
     getCharts,
     inita,
     getTables,
-    getTablesNoData
+    getTablesNoData,
+    setStartPage
 }

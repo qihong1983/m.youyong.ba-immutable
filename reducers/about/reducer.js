@@ -10,7 +10,8 @@ const About = (state, action) => {
 
         return Immutable.fromJS({
             offset: 1,
-            tableData: []
+            tableData: [],
+            startPage: true
         })
     }
 
@@ -27,7 +28,17 @@ const About = (state, action) => {
 
 
             return state.set('tableData', Immutable.fromJS(action.payload));
+            case "ABOUT_STARTPAGE":
 
+                console.log(state, '###########');
+    
+                // return Object.assign({}, state, {
+                //     tableData: action.payload
+                // });
+    
+    
+                return state.set('startPage', Immutable.fromJS(action.payload));
+    
 
         default:
             //返回初始化

@@ -61,10 +61,22 @@ class Home extends Component {
   // }
 
 
-  static async getInitialProps({ store, isServer, pathname, query }) {
+  static async getInitialProps({ store, isServer, pathname, query, res, req }) {
     if (isServer == false) {
       NProgress.start();
+    } else {
+      var u = req.headers['user-agent'];
+      console.log(u,'uuuuuuu');
+      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+    
+      if (isiOS) {
+        console.log("这是IOS系统");
+      }
+
+
     }
+
+
 
     // let data = store.getState();
 
@@ -77,8 +89,6 @@ class Home extends Component {
     }
 
     await store.dispatch(actionCreators.getTables(params));
-
-
 
   }
 
@@ -98,8 +108,19 @@ class Home extends Component {
 
   componentDidMount() {
     console.log(this.props, '#######123####');
+
+    
+
     if (document != undefined) {
       NProgress.done();
+    }
+
+    if (this.props.index.toJS().startPage) {
+      setTimeout(() => {
+        //xxxxx
+
+        this.props.setStartPage(false);
+      }, 3000);
     }
   }
 
@@ -117,15 +138,12 @@ class Home extends Component {
 
 
   getListItem() {
-
     // console.log(this.props.index.toJS().table, '****************');
-
     // this.props.index.toJS().tableData.map((v, k) => {
     return (
 
       <List>
         {
-
           // this.props.index.About.tableData.map((v, k) => {
           this.props.index.toJS().tableData.map((v, k) => {
             return (
@@ -166,9 +184,9 @@ class Home extends Component {
 
   renderContent(pageText) {
     return (
-      <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
+      <div style={{  backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
         
-  
+       
          <div style={{ height: '100%' }}>
          <NavBar>主页</NavBar>
        
@@ -210,6 +228,9 @@ class Home extends Component {
     //   })}
     // </List>);
 
+    
+    console.log(this.props.index.toJS(), '****####****###');
+
     const sidebar = (<List>
       <List.Item key={1}
         thumb="https://m.youyong.ba/static/images/icons/icon-72x72.png"
@@ -226,13 +247,19 @@ class Home extends Component {
 
     </List>)
 
-    console.log(this.index);
+    
 
     return (
       <div>
         <Head title="Home" />
         {/* <Nav /> */}
+        <div style={{display:this.props.index.toJS().startPage ? "block": "none",height:"100%", width:"100%", zIndex:110, textAlign:"center", background:"white", position:"absolute",top:"0px"}}>
+            <div>
+                <img style={{marginTop:"300px"}} src="/static/images/icons/icon-72x72.png" />
+            </div>
+        </div>
         <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
+        
         <TabBar
           unselectedTintColor="#949494"
           tintColor="#33A3F4"

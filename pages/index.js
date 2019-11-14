@@ -31,9 +31,12 @@ import {
   PullToRefresh,
   Drawer,
   List,
+  Modal,
   NoticeBar,
   SwipeAction,
   Pagination,
+  Button,
+  InputItem,
   Icon,
   TabBar
 } from 'antd-mobile';
@@ -41,7 +44,12 @@ import {
 import Head from '../components/head'
 import Nav from '../components/nav'
 
-import styled,{ createGlobalStyle } from 'styled-components';
+
+import About from './Home/Home';
+import SendActive from './Home/SendActive';
+import Ucenter from './Home/Ucenter';
+
+import styled, { createGlobalStyle } from 'styled-components';
 import { relative, isAbsolute } from 'path';
 import { relativeTimeRounding } from 'moment';
 
@@ -52,7 +60,16 @@ import { relativeTimeRounding } from 'moment';
 // `
 
 
-
+function closest(el, selector) {
+  const matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
+  while (el) {
+    if (matchesSelector.call(el, selector)) {
+      return el;
+    }
+    el = el.parentElement;
+  }
+  return null;
+}
 
 class Home extends Component {
   // static getInitialProps({ store, isServer, pathname, query }) {
@@ -66,11 +83,11 @@ class Home extends Component {
       NProgress.start();
     } else {
       var u = req.headers['user-agent'];
-      console.log(u,'uuuuuuu');
+      console.log(u, 'uuuuuuu');
       var isiOS = !!u.match(/iPhone/); //ios终端
-    
+
       if (isiOS) {
-        
+
       } else {
         await store.dispatch(actionCreators.setStartPage(false));
       }
@@ -87,7 +104,8 @@ class Home extends Component {
 
     let params = {
       limit: 10,
-      offset: 1
+      offset: 1,
+      visible: false
     }
 
     await store.dispatch(actionCreators.getTables(params));
@@ -111,7 +129,7 @@ class Home extends Component {
   componentDidMount() {
     console.log(this.props, '#######123####');
 
-    
+
 
     if (document != undefined) {
       NProgress.done();
@@ -139,80 +157,36 @@ class Home extends Component {
   }
 
 
-  getListItem() {
-    // console.log(this.props.index.toJS().table, '****************');
-    // this.props.index.toJS().tableData.map((v, k) => {
-    return (
 
-      <List>
-        {
-          // this.props.index.About.tableData.map((v, k) => {
-          this.props.index.toJS().tableData.map((v, k) => {
-            return (
-              
-            <SwipeAction
-              style={{ backgroundColor: 'gray' }}
-              autoClose
-              right={[
-                {
-                  text: '报名',
-                  onPress: () => console.log('报名'),
-                  style: { backgroundColor: '#e56045', color: 'white', width:'108px' },
-                },
-              ]}
-             
-              onOpen={() => console.log('global open')}
-              onClose={() => console.log('global close')}
-            >
-              <List.Item
-                // extra="可点击可滑动"
-                arrow="horizontal"
-                thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
-                onClick={e => console.log(e)}
-              >
-                {v.cname} <List.Item.Brief>subtitle</List.Item.Brief>
-              </List.Item>
-            </SwipeAction>
- 
-            )
-          })
-        }
-
-      </List>
-
-    );
-  }
 
 
   renderContent(pageText) {
     return (
-      <div style={{  backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
-        
-       
-         <div style={{ height: '100%' }}>
-         <NavBar>主页</NavBar>
-       
-        <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
-              Notice: 完美前端脚手架(使前端开发不在复杂)--pwa + ssr + data fetching + react + redux + code splitting + antd + 多人并行开发方式 + SPA 。 简单、易用、实用性超过阿里（umi）、京东(taro)、百度(百度fis)。不服来战
-          </NoticeBar>
+      <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
 
-        <SearchBar placeholder="结伴游"  showCancelButton maxLength={8} />
+        pageText
 
-          {this.getListItem()}
-          
-          {/* <WhiteSpace /> */}
-          <Pagination total={5}
-      className="custom-pagination-with-icon"
-      current={1}
-      locale={{
-        prevText: (<span className="arrow-align"><Icon type="left" style={{position:"relative",top:"5px"}} />上一步</span>),
-        nextText: (<span className="arrow-align">下一步<Icon type="right" style={{position:"relative",top:"5px"}} /></span>),
-      }}
-    /> 
-           </div>
-     
+
+
       </div>
     );
+  }
+
+  onWrapTouchStart(e) {
+    // fix touch to scroll background page on iOS
+    if (!/iPhone|iPod|iPad/i.test(navigator.userAgent)) {
+      return;
+    }
+    const pNode = closest(e.target, '.am-modal-content');
+    if (!pNode) {
+      e.preventDefault();
+    }
+  }
+
+  onClose = key => () => {
+    this.setState({
+      [key]: false,
+    });
   }
 
   render() {
@@ -230,7 +204,8 @@ class Home extends Component {
     //   })}
     // </List>);
 
-    
+    console.log(this.props, '########');
+
     // console.log(this.props.index.toJS(), '****####****###');
 
     const sidebar = (<List>
@@ -249,102 +224,135 @@ class Home extends Component {
 
     </List>)
 
-    
+
 
     return (
       <div>
         <Head title="Home" />
         {/* <Nav /> */}
         <div style={{
-            // display:this.props.index.toJS().startPage ? "block": "none",
-            display:"none",
-            height:"100%", width:"100%", zIndex:110, textAlign:"center", background:"white", position:"absolute",top:"0px"}}>
-            <div>
-                <img style={{marginTop:"300px"}} src="/static/images/icons/icon-72x72.png" />
-            </div>
+          display: this.props.index.toJS().startPage ? "block" : "none",
+          // display: "none",
+          height: "100%", width: "100%", zIndex: 110, textAlign: "center", background: "white", position: "absolute", top: "0px"
+        }}>
+          <div>
+            <img style={{ marginTop: "300px" }} src="/static/images/icons/icon-72x72.png" />
+          </div>
         </div>
         <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
-        
-        <TabBar
-          unselectedTintColor="#949494"
-          tintColor="#33A3F4"
-          barTintColor="white"
-          hidden={this.state.hidden}
-          tabBarPosition={"bottom"}
-        >
+          <Modal
+            visible={this.state.visible}
+            transparent
+            maskClosable={false}
+            onClose={this.onClose('modal1')}
+            title="用户注册登录"
+            footer={[{
+              text: '登录', onPress: () => {
 
-          <TabBar.Item
-            icon={
-              <div style={{
-                width: '22px',
-                height: '22px',
-                background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat' }}
-              />
-            }
-            selectedIcon={
-              <div style={{
-                width: '22px',
-                height: '22px',
-                background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat' }}
-              />
-            }
-            title="主页"
-            key="index"
-            dot
-            selected={this.state.selectedTab === 'greenTab'}
-            onPress={() => {
-              this.setState({
-                selectedTab: 'greenTab',
-              });
-            }}
+                this.setState({
+                  visible: false
+                });
+              }
+            }]}
+            wrapProps={{ onTouchStart: this.onWrapTouchStart.bind(this) }}
+            afterClose={() => { alert('afterClose'); }}
           >
-              {this.renderContent('Friend')}
-          </TabBar.Item>
+            <div style={{ height: 150, overflow: 'scroll' }}>
+              <InputItem
+                placeholder="必填"
+              >
+                手机号
+              </InputItem>
+              <Button type="primary">发送验证码</Button>
+              <InputItem
+                placeholder="必填"
+              >验证码</InputItem>
+            </div>
+          </Modal>
+          <TabBar
+            unselectedTintColor="#949494"
+            tintColor="#33A3F4"
+            barTintColor="white"
+            hidden={this.state.hidden}
+            tabBarPosition={"bottom"}
+          >
 
-          <TabBar.Item
-            icon={
-              <div style={{
-                width: '22px',
-                height: '22px',
-                background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat' }}
-              />
-            }
-            selectedIcon={
-              <div style={{
-                width: '22px',
-                height: '22px',
-                background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat' }}
-              />
-            }
-            title="发布"
-            key="send"
-            dot
-            selected={this.state.selectedTab === 'greenTab1'}
-            onPress={() => {
-              this.setState({
-                selectedTab: 'greenTab1',
-              });
-            }}
-          >
-              {this.renderContent('Friend')}
-          </TabBar.Item>
-          <TabBar.Item
-            icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
-            selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
-            title="个人中心"
-            key="my"
-            selected={this.state.selectedTab === 'yellowTab'}
-            onPress={() => {
-              this.setState({
-                selectedTab: 'yellowTab',
-              });
-            }}
-          >
-            {this.renderContent('My')}
-          </TabBar.Item>
-        </TabBar>
-      </div>
-      <style jsx>{`
+            <TabBar.Item
+              icon={
+                <div style={{
+                  width: '22px',
+                  height: '22px',
+                  background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat'
+                }}
+                />
+              }
+              selectedIcon={
+                <div style={{
+                  width: '22px',
+                  height: '22px',
+                  background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat'
+                }}
+                />
+              }
+              title="主页"
+              key="index"
+              dot
+              selected={this.state.selectedTab === 'greenTab'}
+              onPress={() => {
+                this.setState({
+                  selectedTab: 'greenTab',
+                });
+              }}
+            >
+              <About router={this.props.router} />
+            </TabBar.Item>
+
+            <TabBar.Item
+              icon={
+                <div style={{
+                  width: '22px',
+                  height: '22px',
+                  background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat'
+                }}
+                />
+              }
+              selectedIcon={
+                <div style={{
+                  width: '22px',
+                  height: '22px',
+                  background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat'
+                }}
+                />
+              }
+              title="发布"
+              key="send"
+              dot
+              selected={this.state.selectedTab === 'greenTab1'}
+              onPress={() => {
+                this.setState({
+                  selectedTab: 'greenTab1',
+                });
+              }}
+            >
+              <SendActive />
+            </TabBar.Item>
+            <TabBar.Item
+              icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
+              selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
+              title="个人中心"
+              key="my"
+              selected={this.state.selectedTab === 'yellowTab'}
+              onPress={() => {
+                this.setState({
+                  selectedTab: 'yellowTab',
+                });
+              }}
+            >
+              <Ucenter router={this.props.router} />
+            </TabBar.Item>
+          </TabBar>
+        </div>
+        <style jsx>{`
      .pagination-container {
       margin: 0 15px;
     }

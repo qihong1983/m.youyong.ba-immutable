@@ -13,41 +13,42 @@ import { ServerStyleSheet } from 'styled-components'
 export default class MyDocument extends Document {
 
 
-    
+
 
     render() {
         // const {
         //     nextStyle
         // } = this.props;
 
-       
+
         // console.log(this.props, 'thisthis###');
         return (
             <html>
                 <Head>
-                {/* {nextStyle.tag}   */}
+                    {/* {nextStyle.tag}   */}
                     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
                     <link rel="manifest" href="/static/manifest.json" />
+                    <link rel="stylesheet" href="/static/antd.css" />
                     <link href="/static/nprogress.min.css" rel="stylesheet" />
                     {/* <link rel="apple-touch-icon" href="/static/.png"/> */}
 
                     <link rel="apple-touch-icon" sizes="57x57" href="/static/images/ios_icons/icon-57x57.png" />
 
-<link rel="apple-touch-icon" sizes="72x72" href="/static/images/ios_icons/icon-72x72.png" />
+                    <link rel="apple-touch-icon" sizes="72x72" href="/static/images/ios_icons/icon-72x72.png" />
 
-<link rel="apple-touch-icon" sizes="114x114" href="/static/images/ios_icons/icon-114x114.png" />
+                    <link rel="apple-touch-icon" sizes="114x114" href="/static/images/ios_icons/icon-114x114.png" />
 
-<link rel="apple-touch-icon" sizes="144x144" href="/static/images/ios_icons/icon-144x144.png" />
+                    <link rel="apple-touch-icon" sizes="144x144" href="/static/images/ios_icons/icon-144x144.png" />
 
 
                     {/* <link rel="stylesheet" href="/static/demo.css" /> */}
-                    {this.props.styleTags} 
+                    {this.props.styleTags}
                 </Head>
                 <body>
-                  
+
                     <Main />
                     <NextScript />
-               
+
                 </body>
             </html>
         );
@@ -72,7 +73,7 @@ MyDocument.getInitialProps = function (ctx) {
     const sheet = new ServerStyleSheet()
     const page = ctx.renderPage(App => props => sheet.collectStyles(<App {...props} />))
     const styleTags = sheet.getStyleElement()
-    return { ...page,  styleTags }
+    return { ...page, styleTags }
 
 
 

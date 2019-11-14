@@ -154,3 +154,8 @@ body {
     width: 300px;
     padding: 0;
   }
+
+  .popup-list .am-list-body {
+    height: 210px;
+    overflow: auto;
+  }

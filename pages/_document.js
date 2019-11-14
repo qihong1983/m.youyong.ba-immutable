@@ -58,7 +58,7 @@ MyDocument.getInitialProps = function (ctx) {
 
 
 
-    console.log(ctx, 'ctx');
+    // console.log(ctx, 'ctx');
     const props = Document.getInitialProps(ctx);
 
     // console.log(props);

@@ -67,10 +67,12 @@ class Home extends Component {
     } else {
       var u = req.headers['user-agent'];
       console.log(u,'uuuuuuu');
-      var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      var isiOS = !!u.match(/iPhone/); //ios终端
     
       if (isiOS) {
-        console.log("这是IOS系统");
+        
+      } else {
+        await store.dispatch(actionCreators.setStartPage(false));
       }
 
 
@@ -229,7 +231,7 @@ class Home extends Component {
     // </List>);
 
     
-    console.log(this.props.index.toJS(), '****####****###');
+    // console.log(this.props.index.toJS(), '****####****###');
 
     const sidebar = (<List>
       <List.Item key={1}
@@ -370,7 +372,7 @@ class Home extends Component {
 //将state.counter绑定到props的counter
 const mapStateToProps = (state) => {
 
-  console.log(state.get('About'), 'state');
+  // console.log(state.get('About'), 'state');
 
   return {
     index: state.get('About')

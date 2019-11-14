@@ -55,11 +55,13 @@ import styled,{ createGlobalStyle } from 'styled-components';
 */
 const makeStore = (initialState, options) => {
 
-    console.log(initialState = Immutable.fromJS(initialState), 'initialStateinitialStateinitialStateinitialState');
+    // console.log(initialState = Immutable.fromJS(initialState), 'initialStateinitialStateinitialStateinitialState');
 
+    initialState = Immutable.fromJS(initialState);
     // initialState = Immutable.fromJS(initialState);
 
-    console.log(composeWithDevTools(applyMiddleware(...middleware)), 'composeWithDevTools(applyMiddleware(...middleware))composeWithDevTools(applyMiddleware(...middleware))');
+    // console.log(composeWithDevTools(applyMiddleware(...middleware)), 'composeWithDevTools(applyMiddleware(...middleware))composeWithDevTools(applyMiddleware(...middleware))');
+    // composeWithDevTools(applyMiddleware(...middleware))
     return createStore(reducer,
         initialState,
         composeWithDevTools(applyMiddleware(...middleware)));
@@ -89,7 +91,6 @@ class MyApp extends App {
     render() {
         const { Component, pageProps, store } = this.props;
 
-        console.log(store, 'storestorestorestore');
         return (
             <Container>
            

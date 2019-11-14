@@ -31,13 +31,13 @@ export default class MyDocument extends Document {
                     <link href="/static/nprogress.min.css" rel="stylesheet" />
                     {/* <link rel="apple-touch-icon" href="/static/.png"/> */}
 
-                    <link rel="apple-touch-icon" sizes="57x57" href="/static/images/icons/icon-57x57.png" />
+                    <link rel="apple-touch-icon" sizes="57x57" href="/static/images/ios_icons/icon-57x57.png" />
 
-<link rel="apple-touch-icon" sizes="72x72" href="/static/images/icons/icon-72x72.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/static/images/ios_icons/icon-72x72.png" />
 
-<link rel="apple-touch-icon" sizes="114x114" href="/static/images/icons/icon-114x114.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/static/images/ios_icons/icon-114x114.png" />
 
-<link rel="apple-touch-icon" sizes="144x144" href="/static/images/icons/icon-144x144.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/static/images/ios_icons/icon-144x144.png" />
 
 
                     {/* <link rel="stylesheet" href="/static/demo.css" /> */}

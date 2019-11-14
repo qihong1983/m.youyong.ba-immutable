@@ -255,7 +255,10 @@ class Home extends Component {
       <div>
         <Head title="Home" />
         {/* <Nav /> */}
-        <div style={{display:this.props.index.toJS().startPage ? "block": "none",height:"100%", width:"100%", zIndex:110, textAlign:"center", background:"white", position:"absolute",top:"0px"}}>
+        <div style={{
+            // display:this.props.index.toJS().startPage ? "block": "none",
+            display:"none",
+            height:"100%", width:"100%", zIndex:110, textAlign:"center", background:"white", position:"absolute",top:"0px"}}>
             <div>
                 <img style={{marginTop:"300px"}} src="/static/images/icons/icon-72x72.png" />
             </div>

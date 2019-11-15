@@ -135,13 +135,8 @@ class Home extends Component {
       NProgress.done();
     }
 
-    if (this.props.index.toJS().startPage) {
-      setTimeout(() => {
-        //xxxxx
 
-        this.props.setStartPage(false);
-      }, 3000);
-    }
+
   }
 
   onOpenChange(e) {
@@ -230,15 +225,7 @@ class Home extends Component {
       <div>
         <Head title="Home" />
         {/* <Nav /> */}
-        <div style={{
-          display: this.props.index.toJS().startPage ? "block" : "none",
-          // display: "none",
-          height: "100%", width: "100%", zIndex: 110, textAlign: "center", background: "white", position: "absolute", top: "0px"
-        }}>
-          <div>
-            <img style={{ marginTop: "300px" }} src="/static/images/icons/icon-72x72.png" />
-          </div>
-        </div>
+
         <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>
           <Modal
             visible={this.state.visible}
@@ -379,6 +366,7 @@ class Home extends Component {
     )
   }
 }
+
 
 //将state.counter绑定到props的counter
 const mapStateToProps = (state) => {

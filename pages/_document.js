@@ -27,7 +27,9 @@ export default class MyDocument extends Document {
                 <Head>
                     {/* {nextStyle.tag}   */}
                     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+                    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"></meta>
                     <link rel="manifest" href="/static/manifest.json" />
+
                     <link rel="stylesheet" href="/static/antd.css" />
                     <link href="/static/nprogress.min.css" rel="stylesheet" />
                     {/* <link rel="apple-touch-icon" href="/static/.png"/> */}

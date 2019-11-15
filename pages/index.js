@@ -89,7 +89,7 @@ class Home extends Component {
       if (isiOS) {
 
       } else {
-        await store.dispatch(actionCreators.setStartPage(false));
+        // await store.dispatch(actionCreators.setStartPage(false));
       }
 
 

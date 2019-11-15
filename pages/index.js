@@ -94,13 +94,13 @@ class Home extends Component {
     // console.log(data, '*****');
     // console.log(data.Home.limit, 'data11');
 
-    let params = {
-      limit: 10,
-      offset: 1,
-      visible: false
-    }
+    // let params = {
+    //   limit: 10,
+    //   offset: 1,
+    //   visible: false
+    // }
 
-    await store.dispatch(actionCreators.getTables(params));
+    // await store.dispatch(actionCreators.getTables(params));
 
   }
 
@@ -127,7 +127,13 @@ class Home extends Component {
       NProgress.done();
     }
 
+    let params = {
+      limit: 10,
+      offset: 1,
+      visible: false
+    }
 
+    this.props.getTables(params)
 
   }
 

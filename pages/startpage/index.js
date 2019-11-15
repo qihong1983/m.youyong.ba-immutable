@@ -79,14 +79,14 @@ class StartIndex extends Component {
     componentDidMount() {
         console.log(this.props, 'this.props');
 
-        if (this.props.index.toJS().startPage) {
-            setTimeout(() => {
-                //xxxxx
+        // if (this.props.index.toJS().startPage) {
+        setTimeout(() => {
+            //xxxxx
 
-                // await this.props.setStartPage(false);
-                this.props.router.replace("/");
-            }, 3000);
-        }
+            // await this.props.setStartPage(false);
+            this.props.router.replace("/");
+        }, 3000);
+        // }
     }
     onChange = (files, type, index) => {
         console.log(files, type, index);

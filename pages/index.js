@@ -82,15 +82,7 @@ class Home extends Component {
     if (isServer == false) {
       NProgress.start();
     } else {
-      var u = req.headers['user-agent'];
-      console.log(u, 'uuuuuuu');
-      var isiOS = !!u.match(/iPhone/); //ios终端
 
-      if (isiOS) {
-
-      } else {
-        // await store.dispatch(actionCreators.setStartPage(false));
-      }
 
 
     }

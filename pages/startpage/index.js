@@ -57,6 +57,16 @@ const data = [{
 
 class StartIndex extends Component {
 
+    static async getInitialProps({ store, isServer, pathname, query, res, req }) {
+        if (isServer == false) {
+            NProgress.start();
+        } else {
+
+        }
+
+
+    }
+
     constructor(props) {
         super(props);
 
@@ -150,6 +160,10 @@ class StartIndex extends Component {
                     {/* <img style={{ marginTop: "300px" }} src="/static/images/icons/icon-72x72.png" /> */}
 
                     <h2 style={{ marginTop: "150px", color: "#e56045" }}>互联网圈结伴游泳</h2>
+
+                    <Button onClick={() => {
+                        this.props.router.push(`/`);
+                    }}>去首页</Button>
                 </div>
             </div>
         )

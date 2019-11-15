@@ -5,7 +5,7 @@
   "background_color": "#f2f2f2",
   "display": "fullscreen",
   "Scope": "/",
-  "start_url": "https://m.youyong.ba/startpage",
+  "start_url": "/",
   "icons": [
     {
       "src": "images/icons/icon-72x72.png",

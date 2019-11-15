@@ -87,11 +87,11 @@ const getTables = (data) => {
             // mode: 'cors',
             // cache: 'force-cache',
 
-            headers: {
-                'Cache-Control': 'no-cache',
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Bearer xxx'
-            }
+            // headers: {
+            //     'Cache-Control': 'no-cache',
+            //     'Content-Type': 'application/x-www-form-urlencoded',
+            //     'Authorization': 'Bearer xxx'
+            // }
 
             // cache: 'default',
             // body: toQueryString(data)

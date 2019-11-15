@@ -80,11 +80,11 @@ class StartIndex extends Component {
         console.log(this.props, 'this.props');
 
         if (this.props.index.toJS().startPage) {
-            setTimeout(async () => {
+            setTimeout(() => {
                 //xxxxx
 
-                await this.props.setStartPage(false);
-                await this.props.router.replace("/");
+                // await this.props.setStartPage(false);
+                this.props.router.replace("/");
             }, 3000);
         }
     }

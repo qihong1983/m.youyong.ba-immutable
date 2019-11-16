@@ -90,12 +90,12 @@ class StartIndex extends Component {
         console.log(this.props, 'this.props');
 
         // if (this.props.index.toJS().startPage) {
-        // setTimeout(() => {
-        //     //xxxxx
+        setTimeout(() => {
+            //xxxxx
 
-        //     // await this.props.setStartPage(false);
-        //     this.props.router.replace("/");
-        // }, 3000);
+            // await this.props.setStartPage(false);
+            this.props.router.replace("/");
+        }, 3000);
         // }
     }
     onChange = (files, type, index) => {
@@ -161,7 +161,7 @@ class StartIndex extends Component {
 
                     <h2 style={{ marginTop: "150px", color: "#e56045" }}>互联网圈结伴游泳</h2>
 
-                    <Button onClick={() => {
+                    <Button style={{ marginTop: "150px" }} onClick={() => {
                         this.props.router.push(`/`);
                     }}>去首页</Button>
                 </div>

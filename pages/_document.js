@@ -31,7 +31,8 @@ export default class MyDocument extends Document {
                     <link rel="manifest" href="/static/manifest.json" />
 
                     <link rel="stylesheet" href="/static/antd.css" />
-                    <link href="/static/nprogress.min.css" rel="stylesheet" />
+                    {/* <link href="/static/nprogress.min.css" rel="stylesheet" /> */}
+                    <link rel="stylesheet" href="/static/demo.css" />
                     {/* <link rel="apple-touch-icon" href="/static/.png"/> */}
 
                     <link rel="apple-touch-icon" sizes="57x57" href="/static/images/ios_icons/icon-57x57.png" />

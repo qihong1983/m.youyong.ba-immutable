@@ -20,6 +20,9 @@ import NProgress from 'nprogress';
 
 
 import * as actionCreators from '../actions/About/index';
+
+import Wrapper from '../styled/Index/index';
+
 import {
   Flex,
   WhiteSpace,
@@ -88,19 +91,19 @@ class Home extends Component {
     }
 
 
-
     // let data = store.getState();
 
     // console.log(data, '*****');
     // console.log(data.Home.limit, 'data11');
 
-    // let params = {
-    //   limit: 10,
-    //   offset: 1,
-    //   visible: false
-    // }
+    let params = {
+      keyword: "",
+      limit: 10,
+      offset: 1,
+      visible: false
+    }
 
-    // await store.dispatch(actionCreators.getTables(params));
+    await store.dispatch(actionCreators.getTables(params));
 
   }
 
@@ -127,13 +130,13 @@ class Home extends Component {
       NProgress.done();
     }
 
-    let params = {
-      limit: 10,
-      offset: 1,
-      visible: false
-    }
+    // let params = {
+    //   limit: 10,
+    //   offset: 1,
+    //   visible: false
+    // }
 
-    this.props.getTables(params)
+    // this.props.getTables(params)
 
   }
 
@@ -220,7 +223,7 @@ class Home extends Component {
 
 
     return (
-      <div>
+      <Wrapper className="main">
         <Head title="Home" />
         {/* <Nav /> */}
 
@@ -255,30 +258,17 @@ class Home extends Component {
             </div>
           </Modal>
           <TabBar
-            unselectedTintColor="#949494"
-            tintColor="#33A3F4"
-            barTintColor="white"
+            unselectedTintColor="white"
+            tintColor="#e56045"
+            barTintColor="#1b1b1b"
             hidden={this.state.hidden}
             tabBarPosition={"bottom"}
           >
 
             <TabBar.Item
-              icon={
-                <div style={{
-                  width: '22px',
-                  height: '22px',
-                  background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat'
-                }}
-                />
-              }
-              selectedIcon={
-                <div style={{
-                  width: '22px',
-                  height: '22px',
-                  background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat'
-                }}
-                />
-              }
+
+              icon={{ uri: '/static/images/tarbarList.png' }}
+              selectedIcon={{ uri: '/static/images/tarbarListSelect.png' }}
               title="主页"
               key="index"
               dot
@@ -293,25 +283,10 @@ class Home extends Component {
             </TabBar.Item>
 
             <TabBar.Item
-              icon={
-                <div style={{
-                  width: '22px',
-                  height: '22px',
-                  background: 'url(https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg) center center /  21px 21px no-repeat'
-                }}
-                />
-              }
-              selectedIcon={
-                <div style={{
-                  width: '22px',
-                  height: '22px',
-                  background: 'url(https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg) center center /  21px 21px no-repeat'
-                }}
-                />
-              }
+              icon={{ uri: '/static/images/tarbarPush.png' }}
+              selectedIcon={{ uri: '/static/images/tarbarPushSelect.png' }}
               title="发布"
               key="send"
-              dot
               selected={this.state.selectedTab === 'greenTab1'}
               onPress={() => {
                 this.setState({
@@ -322,8 +297,8 @@ class Home extends Component {
               <SendActive />
             </TabBar.Item>
             <TabBar.Item
-              icon={{ uri: 'https://zos.alipayobjects.com/rmsportal/asJMfBrNqpMMlVpeInPQ.svg' }}
-              selectedIcon={{ uri: 'https://zos.alipayobjects.com/rmsportal/gjpzzcrPMkhfEqgbYvmN.svg' }}
+              icon={{ uri: '/static/images/tarbarloginIcon.png' }}
+              selectedIcon={{ uri: '/static/images/tarbarloginIconSelect.png' }}
               title="个人中心"
               key="my"
               selected={this.state.selectedTab === 'yellowTab'}
@@ -360,7 +335,7 @@ class Home extends Component {
       padding: 30px 0 18px 0;
     }
     `}</style>
-      </div>
+      </Wrapper>
     )
   }
 }

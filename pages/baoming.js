@@ -34,7 +34,7 @@ import {
     TabBar
 } from 'antd-mobile';
 
-
+import NProgress from 'nprogress';
 
 import {
     bindActionCreators
@@ -48,8 +48,31 @@ import {
 
 import * as actionCreators from '../actions/About/index';
 
+
+import Wrapper from '../styled/Index/index';
+
+
+
 class Baoming extends Component {
 
+    static async getInitialProps({ store, isServer, pathname, query, res, req }) {
+        if (isServer == false) {
+            NProgress.start();
+        } else {
+
+
+
+        }
+
+
+        // let data = store.getState();
+
+        // console.log(data, '*****');
+        // console.log(data.Home.limit, 'data11');
+
+
+
+    }
     constructor(props) {
         super(props);
 
@@ -67,6 +90,9 @@ class Baoming extends Component {
 
     componentDidMount() {
         console.log(this.props, 'this.props');
+        if (document != undefined) {
+            NProgress.done();
+        }
     }
 
     onErrorClick() {
@@ -123,9 +149,9 @@ class Baoming extends Component {
         console.log(this.props, 'this.props');
         const { getFieldProps, getFieldError } = this.props.form;
         return (
-            <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
+            <Wrapper className="main" style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
 
-                <NavBar 
+                <NavBar
                     mode="dark"
                     icon={<Icon type="left" />}
                     onLeftClick={() => {
@@ -138,36 +164,36 @@ class Baoming extends Component {
                 <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
                     Notice: 完美前端脚手架(使前端开发不在复杂)--pwa + ssr + data fetching + react + redux + code splitting + antd + 多人并行开发方式 + SPA 。 简单、易用、实用性超过阿里（umi）、京东(taro)、百度(百度fis)。不服来战
           </NoticeBar>
-
+                {/* 
                 <List renderHeader={() => '费用'}>
 
                     <List.Item>
                         20￥
                     </List.Item>
 
-                  
-                </List>
+
+                </List> */}
 
                 <List renderHeader={() => '报名列表'}>
 
 
-                        <List.Item  thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png">
-                            小洪
+                    <List.Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png">
+                        小洪
                         </List.Item>
 
-                        <List.Item  thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png">
-                            小红
+                    <List.Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png">
+                        小红
                         </List.Item>
-                    
+
 
                     <List.Item>
                         <Button type="primary" onClick={() => {
                             this.handleSubmit();
                         }}>报名</Button>
                     </List.Item>
-                        </List>
+                </List>
 
-            </div>
+            </Wrapper>
         )
     }
 }

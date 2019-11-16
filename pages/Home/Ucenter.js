@@ -135,7 +135,7 @@ class Ucenter extends Component {
         return (
             <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
 
-                <NavBar>结伴游泳健身</NavBar>
+                <NavBar>个人中心</NavBar>
 
                 <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
                     Notice: 完美前端脚手架(使前端开发不在复杂)--pwa + ssr + data fetching + react + redux + code splitting + antd + 多人并行开发方式 + SPA 。 简单、易用、实用性超过阿里（umi）、京东(taro)、百度(百度fis)。不服来战

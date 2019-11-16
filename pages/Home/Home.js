@@ -70,6 +70,8 @@ class About extends Component {
     getListItem() {
         // console.log(this.props.index.toJS().table, '****************');
         // this.props.index.toJS().tableData.map((v, k) => {
+
+
         return (
 
             <List>
@@ -100,12 +102,12 @@ class About extends Component {
                                 <List.Item
                                     // extra="可点击可滑动"
                                     arrow="horizontal"
-                                    thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
+                                    thumb={v.thumb}
                                     onClick={() => {
                                         this.props.router.push(`/baoming?id=2`);
                                     }}
                                 >
-                                    {v.cname} <List.Item.Brief>subtitle</List.Item.Brief>
+                                    {v.title} <List.Item.Brief>报名截止时间：{v.startTime}；<br />报名人数上限：{v.num}人</List.Item.Brief>
                                 </List.Item>
                             </SwipeAction>
 

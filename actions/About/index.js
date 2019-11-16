@@ -82,20 +82,30 @@ const getTables = (data) => {
 
 
 
-        let res = await fetch("http://youyong.ba:8080/mock/5d8c57403908d745b308239c/example/cname", {
+        // let res = await fetch("http://youyong.ba:8080/mock/5d8c57403908d745b308239c/example/cname", {
+        //     method: 'GET',
+        //     mode: 'cors',
+        //     cache: 'force-cache',
+
+        //     headers: {
+        //         'Cache-Control': 'no-cache',
+        //         'Authorization': 'Bearer xxx'
+        //     }
+
+
+        // });
+
+
+
+        let res = await fetch(`https://api.youyong.ba/list?page=${data.offset - 1}&keyword=${encodeURI(data.keyword)}`, {
+            // let res = await fetch(`http://localhost:8081/list?page=${data.offset - 1}&keyword=${encodeURI(data.keyword)}`, {
             method: 'GET',
-            // mode: 'cors',
-            // cache: 'force-cache',
+            headers: {
+                'Cache-Control': 'no-cache',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Bearer xxx'
+            }
 
-            // headers: {
-            //     'Cache-Control': 'no-cache',
-            //     'Content-Type': 'application/x-www-form-urlencoded',
-            //     'Authorization': 'Bearer xxx'
-            // }
-
-            // cache: 'default',
-            // body: toQueryString(data)
-            // body: toQueryString(data)
         });
 
         let json = await res.json();

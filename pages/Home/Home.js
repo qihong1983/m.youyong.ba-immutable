@@ -107,7 +107,7 @@ class About extends Component {
                                         this.props.router.push(`/baoming?id=2`);
                                     }}
                                 >
-                                    {v.title} <List.Item.Brief>报名截止时间：{v.startTime}；<br />报名人数上限：{v.num}人</List.Item.Brief>
+                                    {v.title} <List.Item.Brief>报名截止时间：{v.startTime}；<br />报名人数上限：{v.num}人；<br /> 费用：¥{v.price}；<br />发起人：{v.sendUser}；</List.Item.Brief>
                                 </List.Item>
                             </SwipeAction>
 

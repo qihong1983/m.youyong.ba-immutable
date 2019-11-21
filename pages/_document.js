@@ -46,7 +46,9 @@ export default class MyDocument extends Document {
                     <link rel="apple-touch-icon" sizes="144x144" href="/static/images/ios_icons/icon-144x144.png" />
                     <link rel="apple-touch-icon" sizes="180x180" href="/static/images/ios_icons/icon-180x180.png" />
 
+                    <script type="text/javascript" src="/static/js/pinyin_dict_notone.js"></script>
 
+                    <script type="text/javascript" src="/static/js/pinyinUtil.js"></script>
 
                     {/* <link rel="stylesheet" href="/static/demo.css" /> */}
                     {this.props.styleTags}

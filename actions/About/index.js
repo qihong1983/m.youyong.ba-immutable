@@ -1,6 +1,29 @@
 import 'isomorphic-unfetch';
 import Immutable from 'immutable';
 
+
+import {
+    Flex,
+    WhiteSpace,
+    WingBlank,
+    SearchBar,
+    Menu,
+    Button,
+    ActivityIndicator,
+    NavBar,
+    ImagePicker,
+    DatePicker,
+    Toast,
+    PullToRefresh,
+    Drawer,
+    List,
+    NoticeBar,
+    InputItem,
+    SwipeAction,
+    Pagination,
+    Icon,
+    TabBar
+} from 'antd-mobile';
 const toQueryString = (obj) => {
     return obj ? Object.keys(obj).sort().map(function (key) {
         var val = obj[key];
@@ -11,6 +34,13 @@ const toQueryString = (obj) => {
         }
         return encodeURIComponent(key) + '=' + encodeURIComponent(val);
     }).join('&') : '';
+}
+
+function setCookie(name, value) {
+    var Days = 30;
+    var exp = new Date();
+    exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+    document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
 }
 
 const inita = (data) => {
@@ -111,7 +141,19 @@ const getTables = (data) => {
         let json = await res.json();
 
 
-        console.log(22);
+
+        await dispatch({
+            type: "ABOUT_OFFSET",
+            payload: data.offset
+        })
+
+
+
+        await dispatch({
+            type: "ABOUT_TOTAL",
+            payload: json.total
+        })
+
         await dispatch({
             type: "ABOUT_TABLEDATA",
             payload: json.data
@@ -152,10 +194,116 @@ const setStartPage = (data) => {
     }
 }
 
+const sendPassword = (data) => {
+    return async function (dispatch) {
+        let res = await fetch(`https://api.youyong.ba/getPassword?phone=${data}`, {
+            method: 'GET',
+            // mode: 'cors',
+            // cache: 'force-cache',
+            headers: {
+                'Cache-Control': 'no-cache',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Authorization': 'Bearer xxx'
+            },
+            type: 'fetch'
+            // cache: 'default',
+            // body: toQueryString(data)
+        });
+
+        let json = await res.json();
+
+        console.log(json, 'json');
+    }
+}
+
+const getToken = (data, router) => {
+    return async function (dispatch) {
+        console.log(data, 'data');
+        // {phoneNumber: "18600190151", volidCode: "111111"}
+        // let res = await fetch(`http://localhost:8081/accessToken?phone=${data.phoneNumber}`, {
+        // let res = await fetch(`https://api.youyong.ba/accessToken?phone=${data.phoneNumber}`, {
+        let res = await fetch(`https://api.youyong.ba/token`, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            type: 'fetch',
+            body: JSON.stringify(data)
+        });
+
+        let json = await res.json();
+
+        console.log(json, 'json');
+
+        if (json.status) {
+            setCookie('userId', json.data.id);
+            setCookie('userName', decodeURIComponent(json.data.username));
+            setCookie('avatar', json.data.avatar);
+            setCookie('phone', decodeURIComponent(json.data.phone));
+            setCookie('token', json.data.token);
+            Toast.success("登录成功");
+            router.back();
+        } else {
+            // import { message, Button } from 'antd';
+            Toast.fail("令牌获取失败");
+        }
+
+    }
+}
+
+
+const sendSwim = (data, token) => {
+    return async function (dispatch) {
+
+
+        // let res = await fetch(`https://api.youyong.ba/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
+        //     method: 'GET',
+        //     headers: {
+        //         'Cache-Control': 'no-cache',
+        //         // 'Content-Type': 'application/x-www-form-urlencoded',
+        //         'Content-Type': 'application/json',
+        //         'Authorization': token
+        //     }
+        // });
+
+
+        // let res = await fetch(`https://api.youyong.ba/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
+        let res = await fetch(`https://api.youyong.ba/insert?userId=${data.userId}&endTime=${data.endTime}&price=${data.price}&img=${data.imageUrl}&isOver=${data.isOver}&title=${data.title}&sendUser=${data.sendUser}&startTime=${data.endTime}&num=${data.userNum}&endNum=${data.userNum}&thumb=${data.thumb}&pinyin=${data.py}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        let json = await res.json();
+        console.log(json, 'jsonjson');
+
+        if (json.status) {
+            Toast.success("发布成功");
+            return json.status;
+        } else {
+            if (json.msg == -1) {
+                Toast.fail("未登录");
+                return -1;
+            } else {
+                Toast.fail("发布失败");
+                return json.status;
+            }
+
+        }
+    }
+}
+
+
 export {
     getCharts,
     inita,
     getTables,
     getTablesNoData,
-    setStartPage
+    setStartPage,
+    sendPassword,
+    getToken,
+    sendSwim
 }

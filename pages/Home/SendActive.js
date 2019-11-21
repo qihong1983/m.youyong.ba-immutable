@@ -35,6 +35,8 @@ import {
 } from 'antd-mobile';
 
 
+import moment from 'moment';
+
 
 import {
     bindActionCreators
@@ -47,6 +49,17 @@ import {
 
 
 import * as actionCreators from '../../actions/About/index';
+
+//读取cookies 
+function getCookie(name) {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+
+    if (arr = document.cookie.match(reg))
+
+        return unescape(arr[2]);
+    else
+        return null;
+}
 
 class SendActive extends Component {
 
@@ -96,10 +109,41 @@ class SendActive extends Component {
     handleSubmit() {
         this.props.form.validateFields({ force: true }, async (error, values) => {
 
+            var nowDate = new Date().getTime();
+
+            var sendDate = new Date(moment(values.endTime).format("YYYY-MM-DD hh:mm:ss")).getTime();
+
+
+            var userId = getCookie("userId");
+            var sendUser = getCookie("userName");
+            var avatar = getCookie("avatar");
+            var data = {
+                userId: userId,
+                imageUrl: this.state.imageUrl,
+                endTime: moment(values.endTime).format("YYYY-MM-DD hh:mm:ss"),
+                price: values.price,
+                title: values.title,
+                userNum: values.userNum,
+                sendUser: sendUser,
+                thumb: avatar,
+                py: pinyinUtil.getPinyin(values.title).replace(/\s/g, ""),
+                isOver: 0
+            }
+
+
+
             if (!error) {
-                console.log(222);
+                var token = getCookie('token');
+                var isSuccess = await this.props.sendSwim(data, token);
+
+
+                let params = {
+                    offset: 1,
+                    keyword: ""
+                }
+                this.props.getTables(params);
             } else {
-                console.log(111);
+                Toast.fail("有错误");
             }
 
         });

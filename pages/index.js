@@ -91,15 +91,18 @@ class Home extends Component {
     }
 
 
-    // let data = store.getState();
+    let data = store.getState();
 
-    // console.log(data, '*****');
+    console.log(data.get("About").get("offset"), '*****');
+
+    var offset = data.get("About").get("offset");
+    var keyword = data.get("About").get("keyword");
+
     // console.log(data.Home.limit, 'data11');
 
     let params = {
-      keyword: "",
-      limit: 10,
-      offset: 1,
+      keyword: query.keyword ? query.keyword : keyword,
+      offset: query.offset ? query.offset : offset,
       visible: false
     }
 
@@ -123,8 +126,6 @@ class Home extends Component {
 
   componentDidMount() {
     console.log(this.props, '#######123####');
-
-
 
     if (document != undefined) {
       NProgress.done();
@@ -220,11 +221,11 @@ class Home extends Component {
 
     </List>)
 
-
+    NProgress.done();
 
     return (
       <Wrapper className="main">
-        <Head title="Home" />
+        <Head title="游泳吧" />
         {/* <Nav /> */}
 
         <div style={{ position: 'fixed', height: '100%', width: '100%', top: 0 }}>

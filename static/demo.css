@@ -159,3 +159,7 @@ body {
     height: 210px;
     overflow: auto;
   }
+
+  .am-picker-popup-item {
+    color:#e56045;
+}

@@ -45,6 +45,15 @@ import {
 import * as actionCreators from '../../actions/About/index';
 
 
+const CustomIcon = ({ type, className = '', size = 'md', ...restProps }) => (
+    <svg
+        className={`am-icon am-icon-${type.substr(1)} am-icon-${size} ${className}`}
+        {...restProps}
+    >
+        <use xlinkHref={type} /> {/ * svg - sprite - loader@0.3.x * /}
+        {/* <use xlinkHref={#${type.default.id}} /> */} {/* svg-sprite-loader@latest */}
+    </svg >
+);
 
 
 
@@ -65,6 +74,8 @@ class About extends Component {
 
     componentDidMount() {
         console.log(this.props, 'this.props');
+
+
     }
 
     getListItem() {
@@ -120,32 +131,98 @@ class About extends Component {
         );
     }
 
+    setPage(val) {
+        var offset = this.props.index.get("offset");
+        var keyword = this.props.index.get("keyword");
+
+        if (val == "next") {
+            // let params = {
+            //     keyword: keyword,
+            //     offset: offset + 1,
+            //     visible: false
+            // }
+
+
+            this.props.router.push(`/?offset=${parseInt(offset, 10) + 1}&keyword=${keyword}`);
+            // this.props.getTables(params);
+        } else {
+            // let params = {
+            //     keyword: keyword,
+            //     offset: offset - 1,
+            //     visible: false
+            // }
+
+            this.props.router.push(`/?offset=${parseInt(offset, 10) - 1}&keyword=${keyword}`);
+            // this.props.getTables(params);
+        }
+
+
+    }
+
+    changeSearch(val) {
+        this.props.router.push(`/?offset=${1}&keyword=${val}`);
+
+    }
 
     render() {
-        console.log(this.props, 'this.props');
+
+        var total = this.props.index.get("total");
+
+        var tempTotal = Math.floor(total / 8);
+
+        total = total % 8 == 0 ? tempTotal : tempTotal + 1;
+
         return (
             <div style={{ backgroundColor: 'white', height: '100%', textAlign: 'center' }}>
-
-
-
+                {/* <CustomIcon type={require('/static/reload.svg')} /> */}
                 <div style={{ height: '100%' }}>
-                    <NavBar>主页</NavBar>
+                    <NavBar rightContent={[
+                        <img src="/static/reloadm.png" style={{ width: "18px" }} onClick={() => {
+                            // console.log(this.props.router);
+                            // this.props.router.reload();
+
+                            this.props.router.push(`/?offset=${this.props.router.query.offset ? this.props.router.query.offset : this.props.index.get("offset")}&keyword=${this.props.router.query.keyword ? this.props.router.query.keyword : this.props.index.get("keyword")}`);
+                        }} />,
+                    ]}>主页</NavBar>
 
                     <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
-                        Notice: 完美前端脚手架(使前端开发不在复杂)--pwa + ssr + data fetching + react + redux + code splitting + antd + 多人并行开发方式 + SPA 。 简单、易用、实用性超过阿里（umi）、京东(taro)、百度(百度fis)。不服来战
+                        Notice: 此应用暂时公公是线上作品，在调试和迭代的过程中很有可能删除数据库
           </NoticeBar>
 
-                    <SearchBar placeholder="结伴游" showCancelButton maxLength={8} />
+                    <SearchBar placeholder="结伴游" showCancelButton maxLength={8} onChange={this.changeSearch.bind(this)} />
 
                     {this.getListItem()}
 
                     {/* <WhiteSpace /> */}
-                    <Pagination total={5}
+                    <Pagination total={total}
                         className="custom-pagination-with-icon"
-                        current={1}
+                        current={this.props.router.offset ? this.props.router.offset : this.props.index.get("offset")}
                         locale={{
-                            prevText: (<span className="arrow-align"><Icon type="left" style={{ position: "relative", top: "5px" }} />上一步</span>),
-                            nextText: (<span className="arrow-align">下一步<Icon type="right" style={{ position: "relative", top: "5px" }} /></span>),
+                            prevText: (
+                                <span className="arrow-align" onClick={() => {
+
+                                    var offset = this.props.index.get("offset");
+
+                                    if (offset > 1) {
+                                        // this.setPrev();
+                                        this.setPage('prev');
+                                    }
+                                }} >
+                                    <Icon type="left" style={{ position: "relative", top: "5px" }} />
+                                    上一步
+                                </span>),
+                            nextText: (
+                                <span className="arrow-align" onClick={() => {
+                                    var offset = this.props.index.get("offset");
+
+                                    if (offset < total) {
+                                        this.setPage('next');
+                                    }
+                                }}>
+                                    下一步
+                                    <Icon type="right" style={{ position: "relative", top: "5px" }} />
+                                </span>
+                            ),
                         }}
                     />
                 </div>

@@ -112,18 +112,36 @@ class Test1 extends Component {
 
 
   async webrtctest() {
-    var steam = await navigator.mediaDevices.getUserMedia({
+    // var steam = await navigator.mediaDevices.getUserMedia({
 
-      video: {
-        width: 480,
-        height: 320,
-        facingMode: 'user',    //前置摄像头
-        frameRate: {
-          ideal: 30,
-          min: 10
-        }
-      }, audio: false
-    });
+    //   video: {
+    //     width: 480,
+    //     height: 320,
+    //     facingMode: 'user',    //前置摄像头
+    //     frameRate: {
+    //       ideal: 30,
+    //       min: 10
+    //     }
+    //   }, audio: false
+    // });
+
+    if (navigator.mediaDevices.getUserMedia) {
+      //最新的标准API
+      navigator.mediaDevices
+        .getUserMedia(constraints)
+        .then(success)
+        .catch(error);
+    } else if (navigator.webkitGetUserMedia) {
+      //webkit核心浏览器
+      navigator.webkitGetUserMedia(constraints, success, error);
+    } else if (navigator.mozGetUserMedia) {
+      //firfox浏览器
+      navigator.mozGetUserMedia(constraints, success, error);
+    } else if (navigator.getUserMedia) {
+      //旧版API
+      navigator.getUserMedia(constraints, success, error);
+    }
+
     // var steam = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
     // var steam = await navigator.getUserMedia({ video: true, audio: false });
     // console.log(steam, 'steam');
@@ -191,7 +209,8 @@ class Test1 extends Component {
           ref={v => {
             this.video = v;
           }}
-          autoplay playsinline loop>
+          autoplay playsinline loop
+        >
           Video stream not available.
         </video>
 

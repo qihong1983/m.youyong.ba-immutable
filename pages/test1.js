@@ -145,63 +145,7 @@ class Test1 extends Component {
   }
 
 
-  getListItem() {
 
-    // console.log(this.props.index.toJS().table, '****************');
-
-    // this.props.index.toJS().tableData.map((v, k) => {
-    return (
-
-      <List>
-        {
-
-          // this.props.index.About.tableData.map((v, k) => {
-          this.props.index.toJS().tableData.map((v, k) => {
-            return (<SwipeAction
-              style={{ backgroundColor: 'gray' }}
-              autoClose
-              right={[
-                {
-                  text: 'Cancel',
-                  onPress: () => console.log('cancel'),
-                  style: { backgroundColor: '#ddd', color: 'white' },
-                },
-                {
-                  text: 'Delete',
-                  onPress: () => console.log('delete'),
-                  style: { backgroundColor: '#F4333C', color: 'white' },
-                },
-              ]}
-              left={[
-                {
-                  text: 'Reply',
-                  onPress: () => console.log('reply'),
-                  style: { backgroundColor: '#108ee9', color: 'white' },
-                },
-                {
-                  text: 'Cancel',
-                  onPress: () => console.log('cancel'),
-                  style: { backgroundColor: '#ddd', color: 'white' },
-                },
-              ]}
-              onOpen={() => console.log('global open')}
-              onClose={() => console.log('global close')}
-            >
-              <List.Item
-                extra="More"
-                arrow="horizontal"
-                onClick={e => console.log(e)}
-              >
-                {v.cname}
-              </List.Item>
-            </SwipeAction>)
-          })
-        }
-
-      </List>
-
-    );
-  }
 
 
   render() {
@@ -244,23 +188,14 @@ class Test1 extends Component {
         <Head title="Home" />
         {/* <Nav /> */}
         <video
-          style={{ width: 400 }}
+          style={{ width: 400, height: 400 }}
           ref={v => {
             this.video = v;
           }}
           autoplay playsinline>
           Video stream not available.
         </video>
-        <div className="hero">
-          <test11>afasdf</test11>
-          {/* <NavBar style={StyledDiv} icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>主页</NavBar> */}
 
-
-          <StyledDiv icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>主页</StyledDiv>
-
-
-
-        </div>
 
         <style jsx>{`
       .hero {

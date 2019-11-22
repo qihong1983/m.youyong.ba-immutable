@@ -12,6 +12,8 @@ import {
 } from 'next/router';
 import { createForm } from 'rc-form';
 
+import NProgress from 'nprogress';
+
 import {
     Flex,
     WhiteSpace,
@@ -214,7 +216,7 @@ class Login extends Component {
     render() {
 
         // {"userid":"17","avatar":null,"username":"1112","phone":"18600190151"}
-
+        NProgress.done();
         console.log(this.props, 'this.props');
         const { getFieldProps, getFieldError } = this.props.form;
 

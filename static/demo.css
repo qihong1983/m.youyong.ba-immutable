@@ -163,3 +163,15 @@ body {
   .am-picker-popup-item {
     color:#e56045;
 }
+
+.am-number-keyboard-wrapper table tr .am-number-keyboard-item.keyboard-confirm.am-number-keyboard-item-disabled {
+  background-color:#e56045;
+}
+
+.am-number-keyboard-wrapper table tr .am-number-keyboard-item.keyboard-confirm {
+  background-color:#e56045;
+}
+
+.am-number-keyboard-wrapper table tr .am-number-keyboard-item.keyboard-confirm.am-number-keyboard-item-active {
+  background-color:#e56045;
+}

@@ -272,7 +272,6 @@ class Home extends Component {
               selectedIcon={{ uri: '/static/images/tarbarListSelect.png' }}
               title="主页"
               key="index"
-              dot
               selected={this.state.selectedTab === 'greenTab'}
               onPress={() => {
                 this.setState({
@@ -295,7 +294,7 @@ class Home extends Component {
                 });
               }}
             >
-              <SendActive />
+              <SendActive router={this.props.router} />
             </TabBar.Item>
             <TabBar.Item
               icon={{ uri: '/static/images/tarbarloginIcon.png' }}

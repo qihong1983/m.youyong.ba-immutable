@@ -36,7 +36,7 @@ import {
 import Head from '../components/head'
 import Nav from '../components/nav'
 
-import styled,{ createGlobalStyle,extend } from 'styled-components';
+import styled, { createGlobalStyle, extend } from 'styled-components';
 
 
 
@@ -103,8 +103,35 @@ class Test1 extends Component {
     if (document != undefined) {
       NProgress.done();
     }
+
+
+
+    this.webrtctest();
+
   }
 
+
+  async webrtctest() {
+    var steam = await navigator.mediaDevices.getUserMedia({
+
+      video: {
+        width: 480,
+        height: 320,
+        facingMode: 'user',    //前置摄像头
+        frameRate: {
+          ideal: 30,
+          min: 10
+        }
+
+      }, audio: false
+    });
+    // var steam = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+    // var steam = await navigator.getUserMedia({ video: true, audio: false });
+    // console.log(steam, 'steam');
+
+    this.video.srcObject = steam;
+    this.video.play();
+  }
   onOpenChange(e) {
 
     let isOpen = !this.state.open;
@@ -210,19 +237,27 @@ class Test1 extends Component {
 
     console.log(this.index);
 
+
+
     return (
       <div>
         <Head title="Home" />
         {/* <Nav /> */}
-
+        <video
+          style={{ width: 400 }}
+          ref={v => {
+            this.video = v;
+          }}>
+          Video stream not available.
+        </video>
         <div className="hero">
-            <test11>afasdf</test11>
+          <test11>afasdf</test11>
           {/* <NavBar style={StyledDiv} icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>主页</NavBar> */}
-          
+
 
           <StyledDiv icon={<Icon type="ellipsis" />} onLeftClick={this.onOpenChange.bind(this)}>主页</StyledDiv>
 
-         
+
 
         </div>
 

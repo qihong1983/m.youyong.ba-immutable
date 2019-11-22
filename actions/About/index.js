@@ -36,6 +36,15 @@ const toQueryString = (obj) => {
     }).join('&') : '';
 }
 
+function getCookie(name) {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+
+    if (arr = document.cookie.match(reg))
+
+        return unescape(arr[2]);
+    else
+        return null;
+}
 function setCookie(name, value) {
     var Days = 30;
     var exp = new Date();
@@ -253,7 +262,7 @@ const getToken = (data, router) => {
 }
 
 
-const sendSwim = (data, token) => {
+const sendSwim = (data, token, router) => {
     return async function (dispatch) {
 
 
@@ -286,6 +295,8 @@ const sendSwim = (data, token) => {
         } else {
             if (json.msg == -1) {
                 Toast.fail("未登录");
+                console.log(router);
+                router.push("/Login");
                 return -1;
             } else {
                 Toast.fail("发布失败");
@@ -296,14 +307,91 @@ const sendSwim = (data, token) => {
     }
 }
 
+const okBaoming = (data, token, router) => {
+    return async function (dispatch) {
+        let res = await fetch(`https://api.youyong.ba/okbaoming`, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            type: 'fetch',
+            body: JSON.stringify(data)
+        });
+
+        let json = await res.json();
+
+
+        if (json.status) {
+            Toast.success("报名成功");
+            return json.status;
+        } else {
+            if (json.msg == -1) {
+                Toast.fail("未登录");
+                router.push("/Login");
+                return -1;
+            } else {
+                Toast.fail("报名失败");
+                return json.status;
+            }
+        }
+        console.log(json, 'jsonjsonjson');
+        console.log(data, '参数');
+        console.log(token, 'token');
+    }
+}
+
+
+const getEntered = (id, token) => {
+    return async function (dispatch) {
+        // let res = await fetch(`http://www.easy-mock.com/mock/5c578cecde5c260cd71d3b63/youyongba/signUpUserList?id=${id}`, {
+        // let res = await fetch(`http://localhost:8081/getBaomingList?id=${id}`, {
+        let res = await fetch(`https://api.youyong.ba/getBaomingList?id=${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+
+        let json = await res.json();
+        console.log(json, 'jsonjosnjosn');
+        if (json.status) {
+            dispatch({
+                type: "PAGE1_USERLIST",
+                payload: json.data
+            });
+        } else {
+            if (json.msg == -1) {
+                return json.msg
+            } else {
+                dispatch({
+                    type: "PAGE1_USERLIST",
+                    payload: json.data
+                });
+            }
+        }
+
+
+
+    }
+}
+
+
+
+
 
 export {
     getCharts,
     inita,
+    okBaoming,
     getTables,
     getTablesNoData,
     setStartPage,
     sendPassword,
     getToken,
-    sendSwim
+    sendSwim,
+    getEntered
 }

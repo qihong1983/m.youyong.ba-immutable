@@ -13,13 +13,19 @@ const About = (state, action) => {
             tableData: [],
             startPage: true,
             keyword: "",
-            total: 0
+            total: 0,
+            userList: []
         })
     }
 
 
     //http://youyong.ba:8080/mock/5d8c57403908d745b308239c/example/cname
     switch (action.type) {
+
+        case "PAGE1_USERLIST":
+            return state.set('userList', Immutable.fromJS(action.payload));
+        // userList
+
         case "ABOUT_TOTAL":
             return state.set('total', Immutable.fromJS(action.payload));
 

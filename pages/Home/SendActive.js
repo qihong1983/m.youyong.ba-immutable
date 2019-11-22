@@ -69,6 +69,7 @@ class SendActive extends Component {
         this.state = {
             hasError: false,
             value: '',
+            imageUrl: "/static/default.png"
         }
     }
 
@@ -117,24 +118,34 @@ class SendActive extends Component {
             var userId = getCookie("userId");
             var sendUser = getCookie("userName");
             var avatar = getCookie("avatar");
+
+
+            console.log(this.state.imageUrl, 'imageUrl');
+
+            console.log(moment(values.endTime).format("YYYY-MM-DD hh:mm:ss"), 'sdfasdfasdf');
+
             var data = {
                 userId: userId,
                 imageUrl: this.state.imageUrl,
                 endTime: moment(values.endTime).format("YYYY-MM-DD hh:mm:ss"),
                 price: values.price,
                 title: values.title,
-                userNum: values.userNum,
+                userNum: values.num,
                 sendUser: sendUser,
                 thumb: avatar,
                 py: pinyinUtil.getPinyin(values.title).replace(/\s/g, ""),
                 isOver: 0
             }
 
+            console.log(data, 'datadatadata');
+
 
 
             if (!error) {
                 var token = getCookie('token');
-                var isSuccess = await this.props.sendSwim(data, token);
+
+                console.log(this.props, '@@@@@@@@');
+                var isSuccess = await this.props.sendSwim(data, token, this.props.router);
 
 
                 let params = {
@@ -142,6 +153,8 @@ class SendActive extends Component {
                     keyword: ""
                 }
                 this.props.getTables(params);
+                this.props.form.resetFields();
+
             } else {
                 Toast.fail("有错误");
             }
@@ -172,7 +185,7 @@ class SendActive extends Component {
                 <NavBar>结伴</NavBar>
 
                 <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
-                    Notice: 完美前端脚手架(使前端开发不在复杂)--pwa + ssr + data fetching + react + redux + code splitting + antd + 多人并行开发方式 + SPA 。 简单、易用、实用性超过阿里（umi）、京东(taro)、百度(百度fis)。不服来战
+                    Notice: 此应用暂时公公是线上作品，在调试和迭代的过程中很有可能删除数据库
           </NoticeBar>
 
                 <List>

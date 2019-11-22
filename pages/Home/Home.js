@@ -27,8 +27,11 @@ import {
     SwipeAction,
     Pagination,
     Icon,
-    TabBar
+    TabBar,
+    Toast
 } from 'antd-mobile';
+
+import NProgress from 'nprogress';
 
 
 
@@ -55,7 +58,15 @@ const CustomIcon = ({ type, className = '', size = 'md', ...restProps }) => (
     </svg >
 );
 
+function getCookie(name) {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
 
+    if (arr = document.cookie.match(reg))
+
+        return unescape(arr[2]);
+    else
+        return null;
+}
 
 class About extends Component {
 
@@ -97,10 +108,25 @@ class About extends Component {
                                 right={[
                                     {
                                         text: '报名',
-                                        onPress: () => {
-                                            // console.log(this, '******');
-                                            // this.props.router.push(`/baoming?id=1`);
+                                        onPress: async () => {
+                                            // Toast.fail("报名结束");
 
+
+                                            var avatar = getCookie("avatar");
+                                            var userId = getCookie("userId");
+                                            var userName = getCookie("userName");
+                                            var token = getCookie("token");
+
+                                            var data = {
+                                                avatar: avatar,
+                                                userId: userId,
+                                                userName: userName,
+                                                classId: v.id
+                                            }
+
+                                            await this.props.okBaoming(data, token, this.props.router);
+
+                                            await this.props.getEntered(v.id, token);
 
                                         },
                                         style: { backgroundColor: '#e56045', color: 'white', width: '108px' },
@@ -115,7 +141,7 @@ class About extends Component {
                                     arrow="horizontal"
                                     thumb={v.thumb}
                                     onClick={() => {
-                                        this.props.router.push(`/baoming?id=2`);
+                                        this.props.router.push(`/baoming?id=${v.id}`);
                                     }}
                                 >
                                     {v.title} <List.Item.Brief>报名截止时间：{v.startTime}；<br />报名人数上限：{v.num}人；<br /> 费用：¥{v.price}；<br />发起人：{v.sendUser}；</List.Item.Brief>
@@ -166,7 +192,9 @@ class About extends Component {
 
     render() {
 
-        var total = this.props.index.get("total");
+        var total = this.props.index.toJS().total;
+
+
 
         var tempTotal = Math.floor(total / 8);
 

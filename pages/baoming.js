@@ -51,17 +51,39 @@ import * as actionCreators from '../actions/About/index';
 
 import Wrapper from '../styled/Index/index';
 
+function getCookie(name) {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
 
+    if (arr = document.cookie.match(reg))
+
+        return unescape(arr[2]);
+    else
+        return null;
+}
 
 class Baoming extends Component {
 
     static async getInitialProps({ store, isServer, pathname, query, res, req }) {
-        if (isServer == false) {
+        var token = "";
+        if (isServer == false) {// node
             NProgress.start();
-        } else {
 
+            token = getCookie('token');
 
+        } else {// 浏览器
 
+            // console.log(req.headers.cookie, '#####');
+
+            console.log(req.headers);
+            req.headers.cookie.split(";").forEach(item => {
+                if (!item) {
+                    return;
+                }
+
+                if (item.split('=')[0].trim() == 'token') {
+                    token = item.split('=')[1];
+                }
+            })
         }
 
 
@@ -69,6 +91,15 @@ class Baoming extends Component {
 
         // console.log(data, '*****');
         // console.log(data.Home.limit, 'data11');
+
+        console.log(query.id, token, '#################')
+
+        await store.dispatch(actionCreators.getEntered(query.id, token));
+
+        // await this.props.getEntered(query.id, token);
+
+
+
 
 
 
@@ -123,12 +154,52 @@ class Baoming extends Component {
         this.props.form.validateFields({ force: true }, async (error, values) => {
 
             if (!error) {
-                console.log(222);
+
+                var avatar = getCookie("avatar");
+                var userId = getCookie("userId");
+                var userName = getCookie("userName");
+                var token = getCookie("token");
+
+                var data = {
+                    avatar: avatar,
+                    userId: userId,
+                    userName: userName,
+                    classId: this.props.router.query.id
+                }
+
+                await this.props.okBaoming(data, token, this.props.router);
+
+                await this.props.getEntered(this.props.router.query.id, token);
             } else {
-                console.log(111);
+                Toast.fail('出错了');
             }
 
         });
+    }
+
+    userListRender() {
+        var arr = [];
+
+        console.log(this.props.index.get("userList").toJS(), '******');
+
+        var userList = this.props.index.get("userList").toJS();
+
+        if (userList) {
+            userList.map((v, k) => {
+
+                arr.push(<List.Item thumb={v.avatar}>
+                    {v.user}
+                </List.Item>)
+
+                // arr.push(<Col span={2} key={v.user}>
+                //     <Tooltip title={v.user}>
+                //         <Avatar size="large" src={v.avatar} alt={v.user} style={{ marginTop: "10px" }} />
+                //     </Tooltip>
+                // </Col>);
+            });
+        }
+
+        return arr;
     }
 
     render() {
@@ -162,7 +233,7 @@ class Baoming extends Component {
                 </NavBar>
 
                 <NoticeBar marqueeProps={{ loop: true, style: { padding: '0 7.5px' } }}>
-                    Notice: 完美前端脚手架(使前端开发不在复杂)--pwa + ssr + data fetching + react + redux + code splitting + antd + 多人并行开发方式 + SPA 。 简单、易用、实用性超过阿里（umi）、京东(taro)、百度(百度fis)。不服来战
+                    Notice: 此应用暂时公公是线上作品，在调试和迭代的过程中很有可能删除数据库
           </NoticeBar>
                 {/* 
                 <List renderHeader={() => '费用'}>
@@ -177,13 +248,14 @@ class Baoming extends Component {
                 <List renderHeader={() => '报名列表'}>
 
 
-                    <List.Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png">
+                    {this.userListRender()}
+                    {/* <List.Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png">
                         小洪
                         </List.Item>
 
                     <List.Item thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png">
                         小红
-                        </List.Item>
+                        </List.Item> */}
 
 
                     <List.Item>

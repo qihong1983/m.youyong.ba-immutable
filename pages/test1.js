@@ -247,7 +247,8 @@ class Test1 extends Component {
           style={{ width: 400 }}
           ref={v => {
             this.video = v;
-          }}>
+          }}
+          autoplay playsinline>
           Video stream not available.
         </video>
         <div className="hero">

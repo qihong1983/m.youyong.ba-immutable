@@ -380,11 +380,78 @@ const getEntered = (id, token) => {
 }
 
 
+const saveUserInfo = (data, token, router) => {
+    return async function (dispatch) {
+        ///https://api.youyong.ba/saveUserInfo
+        //xxxxxx
+
+
+        let res = await fetch(`https://api.youyong.ba/saveUserInfo`, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            type: 'fetch',
+            body: JSON.stringify(data)
+        });
+        let json = await res.json();
+
+
+
+        console.log(json);
+
+        if (json.status) {
+            Toast.success("修改成功");
+
+            console.log(data);
+            setCookie('userName', data.username);
+            setCookie('avatar', data.avatar);
+            //xxxxx
+        } else {
+            if (json.msg == -1) {
+                Toast.fail("没有权限");
+                router.push("/Login");
+            } else {
+                Toast.fail("修改失败");
+            }
+
+        }
+    }
+}
+
+
+const uploadimg = (files) => {
+    return async function (dispatch) {
+
+        let formData = new FormData();
+
+        console.log(files, 'filesfilesfiles');
+
+        formData.append("avatar", files[files.length - 1].file);
+        let res = await fetch(`https://api.youyong.ba/uploadimg`, {
+            method: 'POST',
+            mode: 'cors',
+
+            type: 'fetch',
+            body: formData
+        });
+        let json = await res.json();
+
+        console.log(json, 'jsonjson');
+
+        if (json.status) {
+            return json.data
+        }
+    }
+}
 
 
 
 export {
     getCharts,
+    saveUserInfo,
     inita,
     okBaoming,
     getTables,
@@ -393,5 +460,6 @@ export {
     sendPassword,
     getToken,
     sendSwim,
-    getEntered
+    getEntered,
+    uploadimg
 }

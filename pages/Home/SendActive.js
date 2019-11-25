@@ -152,6 +152,7 @@ class SendActive extends Component {
                     offset: 1,
                     keyword: ""
                 }
+
                 this.props.getTables(params);
                 this.props.form.resetFields();
 

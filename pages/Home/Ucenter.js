@@ -50,12 +50,81 @@ import {
 import * as actionCreators from '../../actions/About/index';
 import { Brief } from 'antd-mobile/lib/list/ListItem';
 
+
+function clearCookie(name) {
+    setCookie(name, "", -1);
+}
+
+function setCookie(name, value) {
+    var Days = 30;
+    var exp = new Date();
+    exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000);
+    document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString();
+}
+
+//读取cookies 
+function getCookie(name) {
+    var arr, reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)");
+
+    if (arr = document.cookie.match(reg))
+
+        return unescape(arr[2]);
+    else
+        return null;
+}
+
 const data = [{
     url: 'https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg',
     id: '2121',
 }];
 
 class Ucenter extends Component {
+
+    static async getInitialProps({ store, isServer, pathname, query, res, req }) {
+
+        // console.log('****************************************************');
+
+        var token = "";
+        if (isServer == false) {// node
+            NProgress.start();
+
+            token = getCookie('token');
+
+        } else {// 浏览器
+
+            // console.log(req.headers.cookie, '#####');
+
+            console.log(req.headers);
+            var arr = [];
+            req.headers.cookie.split(";").forEach(item => {
+                if (!item) {
+                    return;
+                }
+
+                alert(1);
+                console.log(item.split('=')[0].trim(), '#####^^^');
+
+                // arr.push({
+                //     `item.split('=')[0].trim()`: token = item.split('=')[1]
+                // });
+
+
+                if (item.split('=')[0].trim() == 'token') {
+                    token = item.split('=')[1];
+                }
+            })
+        }
+
+
+
+
+
+
+
+
+
+
+    }
 
     constructor(props) {
         super(props);
@@ -65,6 +134,9 @@ class Ucenter extends Component {
             value: '',
             files: data,
             multiple: false,
+            userId: "",
+            userName: "",
+            avatar: []
         }
 
 
@@ -78,13 +150,49 @@ class Ucenter extends Component {
 
     componentDidMount() {
         console.log(this.props, 'this.props');
+
+
+        var userId = getCookie("userId");
+        var userName = getCookie("userName");
+        var avatar = getCookie("avatar");
+        var phone = getCookie("phone");
+
+        // this.setState({
+        //     userId: userId,
+        //     userName: userName,
+        //     avatar: avatar
+        // });
+
+        this.props.form.setFieldsValue({
+            userName: userName,
+            avatar: avatar ? [{ "url": avatar }] : [],
+        })
+
     }
 
-    onChange = (files, type, index) => {
+    onChange = async (files, type, index) => {
         console.log(files, type, index);
-        this.setState({
-            files,
-        });
+
+        if (type == "add") {
+
+            //https://api.youyong.ba/uploadimg
+
+            console.log(files[0].file, 'files[0].filefiles[0].filefiles[0].file');
+
+            var img = await this.props.uploadimg(files);
+
+            console.log(img, 'imgimgimg');
+            await this.props.form.setFieldsValue({
+                avatar: [{ url: img }]
+            });
+        } else if (type == "remove") {
+            this.props.form.setFieldsValue({
+                avatar: []
+            });
+        }
+
+
+
     }
 
 
@@ -115,13 +223,43 @@ class Ucenter extends Component {
     handleSubmit() {
         this.props.form.validateFields({ force: true }, async (error, values) => {
 
+            console.log(error, values, '#######');
+
             if (!error) {
-                console.log(222);
+                if (values.avatar.length == 0) {
+                    Toast.fail("头像必填");
+                } else {
+                    var data = {
+                        avatar: values.avatar[0].url,
+                        username: values.userName,
+                        phone: getCookie("phone"),
+                        userid: getCookie("userId"),
+                    }
+
+                    var token = getCookie("token");
+
+                    this.props.saveUserInfo(data, token, this.props.router);
+                }
+
+
             } else {
                 console.log(111);
+
             }
 
         });
+    }
+
+    logout() {
+        clearCookie("token");
+
+
+        clearCookie('userId');
+        clearCookie('userName');
+        clearCookie('avatar');
+        clearCookie('phone');
+
+        Toast.success("已退出");
     }
 
     render() {
@@ -142,23 +280,22 @@ class Ucenter extends Component {
           </NoticeBar>
 
                 <List>
-
                     <InputItem
-                        {...getFieldProps('username', {
+                        {...getFieldProps('userName', {
                             rules: [
                                 { required: true, message: '输入用户名' }
                             ],
                         })}
                         type="text"
                         placeholder="必填"
-                        error={getFieldError('username')}
+                        error={getFieldError('userName')}
                         onErrorClick={() => {
-                            Toast.fail(getFieldError('username').join('、'), 1);
+                            Toast.fail(getFieldError('userName').join('、'), 1);
                         }}
                         onChange={async (val) => {
 
                             await this.props.form.setFieldsValue({
-                                username: val
+                                userName: val
                             });
 
                         }}
@@ -168,10 +305,15 @@ class Ucenter extends Component {
                         用户头像
                         <List.Item.Brief>
                             <ImagePicker
-                                files={files}
-                                onChange={this.onChange}
+                                {...getFieldProps('avatar', {
+                                    rules: [
+                                        { required: true, message: '图片必填' }
+                                    ],
+                                })}
+                                files={getFieldProps('avatar').value}
+                                onChange={this.onChange.bind(this)}
                                 onImageClick={(index, fs) => console.log(index, fs)}
-                                selectable={files.length < 1}
+                                selectable={getFieldProps('avatar').value ? getFieldProps('avatar').value.length < 1 : []}
                                 multiple={false}
                             />
 
@@ -185,7 +327,7 @@ class Ucenter extends Component {
                     </List.Item>
                     <List.Item>
                         <Button type="default" onClick={() => {
-                            this.handleSubmit();
+                            this.logout();
                         }}>退出</Button>
 
                     </List.Item>

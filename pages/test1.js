@@ -105,7 +105,7 @@ class Test1 extends Component {
     }
 
 
-
+    var vConsole = new VConsole();
     this.webrtctest();
 
   }

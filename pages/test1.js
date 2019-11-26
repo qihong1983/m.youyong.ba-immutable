@@ -137,9 +137,8 @@ class Test1 extends Component {
       console.log(that);
       try {
 
-        // this.video.srcObject = steam;
-        // this.video.play();
-        that.video.srcObject = CompatibleURL.createObjectURL(stream);
+        that.video.srcObject = stream;
+        // that.video.srcObject = CompatibleURL.createObjectURL(stream);
       } catch (e) {
         console.log(this);
         console.log(stream);
@@ -147,7 +146,7 @@ class Test1 extends Component {
       }
       await that.video.play();
 
-      // }, 3000)
+
 
     }
 

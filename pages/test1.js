@@ -185,7 +185,13 @@ class Test1 extends Component {
     //   await navigator.getUserMedia(constraints, success, error);
     // }
 
-    var steam = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+    var steam = await navigator.mediaDevices.getUserMedia({
+      video: {
+        width: 480,
+        height: 320,
+        facingMode: "user"
+      }, audio: false
+    });
     // var steam = await navigator.getUserMedia({ video: true, audio: false });
     // console.log(steam, 'steam');
 
@@ -268,7 +274,7 @@ class Test1 extends Component {
           ref={v => {
             this.video = v;
           }}
-          autoplay playsinline loop
+          autoPlay playsInline loop
         >
           Video stream not available.
         </video>

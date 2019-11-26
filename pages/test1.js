@@ -172,7 +172,7 @@ class Test1 extends Component {
 
     var constraints = {
       audio: true,
-      video: true
+      video: { facingMode: { exact: "environment" } }
     };
 
     if (navigator.mediaDevices.getUserMedia) {

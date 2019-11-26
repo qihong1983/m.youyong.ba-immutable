@@ -130,77 +130,77 @@ class Test1 extends Component {
                 * 成功回调函数
                 * @param stream 视频流
                 */
-    async function success(stream) {
-      var CompatibleURL = window.URL || window.webkitURL;
-      // await setTimeout(async () => {
+    // async function success(stream) {
+    //   var CompatibleURL = window.URL || window.webkitURL;
+    //   // await setTimeout(async () => {
 
-      console.log(that);
-      try {
+    //   console.log(that);
+    //   try {
 
-        that.video.srcObject = stream;
-        // that.video.srcObject = CompatibleURL.createObjectURL(stream);
-      } catch (e) {
-        console.log(this);
-        console.log(stream);
-        that.video.srcObject = stream;
-      }
-      await that.video.play();
+    //     that.video.srcObject = stream;
+    //     // that.video.srcObject = CompatibleURL.createObjectURL(stream);
+    //   } catch (e) {
+    //     console.log(this);
+    //     console.log(stream);
+    //     that.video.srcObject = stream;
+    //   }
+    //   await that.video.play();
 
 
 
-    }
+    // }
 
     /**
      * 失败回调
      * @param error 错误对象
      */
-    function error(error) {
-      console.log('无法访问媒体设备', error);
-    }
-    var constraints = {
-      audio: true,
-      video: {
-        width: 480,
-        height: 320,
-        facingMode: "user",    //前置摄像头
-        frameRate: {
-          ideal: 30,
-          min: 10
-        }
-      },
-    };
+    // function error(error) {
+    //   console.log('无法访问媒体设备', error);
+    // }
+    // var constraints = {
+    //   audio: true,
+    //   video: {
+    //     width: 480,
+    //     height: 320,
+    //     facingMode: "user",    //前置摄像头
+    //     frameRate: {
+    //       ideal: 30,
+    //       min: 10
+    //     }
+    //   },
+    // };
 
-    if (navigator.mediaDevices.getUserMedia) {
-      //最新的标准API
-      await navigator.mediaDevices
-        .getUserMedia(constraints)
-        .then(success)
-        .catch(error);
-    } else if (navigator.webkitGetUserMedia) {
-      //webkit核心浏览器
-      await navigator.webkitGetUserMedia(constraints, success, error);
-    } else if (navigator.mozGetUserMedia) {
-      //firfox浏览器
-      await navigator.mozGetUserMedia(constraints, success, error);
-    } else if (navigator.getUserMedia) {
-      //旧版API
-      await navigator.getUserMedia(constraints, success, error);
-    }
+    // if (navigator.mediaDevices.getUserMedia) {
+    //   //最新的标准API
+    //   await navigator.mediaDevices
+    //     .getUserMedia(constraints)
+    //     .then(success)
+    //     .catch(error);
+    // } else if (navigator.webkitGetUserMedia) {
+    //   //webkit核心浏览器
+    //   await navigator.webkitGetUserMedia(constraints, success, error);
+    // } else if (navigator.mozGetUserMedia) {
+    //   //firfox浏览器
+    //   await navigator.mozGetUserMedia(constraints, success, error);
+    // } else if (navigator.getUserMedia) {
+    //   //旧版API
+    //   await navigator.getUserMedia(constraints, success, error);
+    // }
 
 
     /**
      * 这个是可用的备份
      */
-    // var steam = await navigator.mediaDevices.getUserMedia({
-    //   video: {
-    //     width: 480,
-    //     height: 320,
-    //     facingMode: "user"
-    //   }, audio: false
-    // });
+    var steam = await navigator.mediaDevices.getUserMedia({
+      video: {
+        width: 480,
+        height: 320,
+        facingMode: "user"
+      }, audio: false
+    });
 
-    // this.video.srcObject = steam;
-    // this.video.play();
+    this.video.srcObject = steam;
+    this.video.play();
     /**
      * 这个是可用备份结束 
      */

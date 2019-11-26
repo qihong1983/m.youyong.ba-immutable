@@ -157,17 +157,22 @@ class Test1 extends Component {
     function error(error) {
       console.log('无法访问媒体设备', error);
     }
+    // var constraints = {
+    //   audio: true,
+    //   video: {
+    //     width: 480,
+    //     height: 320,
+    //     facingMode: "user",    //前置摄像头
+    //     frameRate: {
+    //       ideal: 30,
+    //       min: 10
+    //     }
+    //   },
+    // };
+
     var constraints = {
       audio: true,
-      video: {
-        width: 480,
-        height: 320,
-        facingMode: "user",    //前置摄像头
-        frameRate: {
-          ideal: 30,
-          min: 10
-        }
-      },
+      video: true
     };
 
     if (navigator.mediaDevices.getUserMedia) {

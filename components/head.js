@@ -36,7 +36,7 @@ const Head = props => (
     <meta property="og:image:height" content="630" />
 
     <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
-
+    <script src="https://res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/3.0.0/vconsole.min.js" type="text/javascript"></script>
   </NextHead>
 )
 

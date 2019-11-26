@@ -280,6 +280,7 @@ class Test1 extends Component {
     return (
       <div>
         <Head title="Home" />
+        <input type="file" accept="image/*" capture="camera" />
         {/* <Nav /> */}
         <video
           style={{ width: 400, height: 400 }}

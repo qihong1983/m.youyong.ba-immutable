@@ -49,6 +49,7 @@ export default class MyDocument extends Document {
                     <script type="text/javascript" src="/static/js/pinyin_dict_notone.js"></script>
 
                     <script type="text/javascript" src="/static/js/pinyinUtil.js"></script>
+                    <script src="https://res.wx.qq.com/mmbizwap/zh_CN/htmledition/js/vconsole/3.0.0/vconsole.min.js" type="text/javascript"></script>
 
                     {/* <link rel="stylesheet" href="/static/demo.css" /> */}
                     {this.props.styleTags}

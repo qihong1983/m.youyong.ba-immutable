@@ -131,6 +131,8 @@ class Home extends Component {
       NProgress.done();
     }
 
+    var vConsole = new VConsole();
+
     // let params = {
     //   limit: 10,
     //   offset: 1,

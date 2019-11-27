@@ -288,7 +288,7 @@ class Test1 extends Component {
     return (
       <div>
         <Head title="Home" />
-        <input type="file" accept="image/*" capture="camera" multiple />
+        <input type="file" accept="image/*" capture="user" />
         <input type="file" accept="video/*" capture="camcorder" />
         <input type="file" accept="audio/*" capture="microphone" />
         {/* <Nav /> */}

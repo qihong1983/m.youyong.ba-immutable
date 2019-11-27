@@ -103,7 +103,13 @@ class Test1 extends Component {
     if (document != undefined) {
       NProgress.done();
     }
-
+    // 扩展API加载完毕后调用onPlusReady回调函数 
+    document.addEventListener("plusready", onPlusReady, false);
+    // 扩展API加载完毕，现在可以正常调用扩展API 
+    function onPlusReady() {
+      var cmr = plus.camera.getCamera();
+      alert("Camera supperted video formats: " + cmr.supportedVideoFormats);
+    }
 
     var vConsole = new VConsole();
     this.webrtctest();
@@ -303,9 +309,9 @@ class Test1 extends Component {
         <span>-----------</span>
         <input type="file" accept="image/*;capture=camera" />
         <input type="file" accept="image/*" capture />
-        <div onClick={() => {
+        {/* <div onClick={() => {
           this.onPlusFn();
-        }}>点击调像机</div>
+        }}>点击调像机</div> */}
         {/* <Nav /> */}
         <video
           style={{ width: 400, height: 400 }}

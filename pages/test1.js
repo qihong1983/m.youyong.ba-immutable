@@ -103,13 +103,13 @@ class Test1 extends Component {
     if (document != undefined) {
       NProgress.done();
     }
-    // 扩展API加载完毕后调用onPlusReady回调函数 
-    document.addEventListener("plusready", onPlusReady, false);
-    // 扩展API加载完毕，现在可以正常调用扩展API 
-    function onPlusReady() {
-      var cmr = plus.camera.getCamera();
-      alert("Camera supperted video formats: " + cmr.supportedVideoFormats);
-    }
+    // // 扩展API加载完毕后调用onPlusReady回调函数 
+    // document.addEventListener("plusready", onPlusReady, false);
+    // // 扩展API加载完毕，现在可以正常调用扩展API 
+    // function onPlusReady() {
+    //   var cmr = plus.camera.getCamera();
+    //   alert("Camera supperted video formats: " + cmr.supportedVideoFormats);
+    // }
 
     var vConsole = new VConsole();
     this.webrtctest();
@@ -309,6 +309,20 @@ class Test1 extends Component {
         <span>-----------</span>
         <input type="file" accept="image/*;capture=camera" />
         <input type="file" accept="image/*" capture />
+
+        <span>-----------</span>
+        <Button onClick={() => {
+          dd.biz.util.uploadImageFromCamera({
+            compression: true,//(是否压缩，默认为true)
+            onSuccess: function (result) {
+              alert(JSON.stringify(result));
+              // _this.OA000103.push({ WeChatServerId: result[0] })
+            },
+            onFail: function (err) {
+              alert('调用图片上传：' + JSON.stringify(err))
+            }
+          })
+        }}>点击拍照</Button>
         {/* <div onClick={() => {
           this.onPlusFn();
         }}>点击调像机</div> */}

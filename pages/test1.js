@@ -252,7 +252,10 @@ class Test1 extends Component {
   }
 
 
-
+  onPlusFn() {
+    var cmr = plus.camera.getCamera();
+    alert("Camera supperted video formats: " + cmr.supportedVideoFormats);
+  }
 
 
   render() {
@@ -300,7 +303,9 @@ class Test1 extends Component {
         <span>-----------</span>
         <input type="file" accept="image/*;capture=camera" />
         <input type="file" accept="image/*" capture />
-
+        <div onClick={() => {
+          this.onPlusFn();
+        }}>点击调像机</div>
         {/* <Nav /> */}
         <video
           style={{ width: 400, height: 400 }}

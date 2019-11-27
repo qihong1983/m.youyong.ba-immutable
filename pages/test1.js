@@ -170,10 +170,15 @@ class Test1 extends Component {
     //   },
     // };
 
+    // var constraints = {
+    //   audio: true,
+    //   video: true,
+    //   video: { facingMode: { exact: "environment" } }
+    // };
+
     var constraints = {
       audio: true,
-      video: true,
-      video: { facingMode: { exact: "environment" } }
+      video: true
     };
 
     if (navigator.mediaDevices.getUserMedia) {
@@ -291,6 +296,11 @@ class Test1 extends Component {
         <input type="file" accept="image/*" capture="user" />
         <input type="file" accept="video/*" capture="camcorder" />
         <input type="file" accept="audio/*" capture="microphone" />
+
+        <span>-----------</span>
+        <input type="file" accept="image/*;capture=camera" />
+        <input type="file" accept="image/*" capture />
+
         {/* <Nav /> */}
         <video
           style={{ width: 400, height: 400 }}

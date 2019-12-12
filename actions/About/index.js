@@ -365,6 +365,7 @@ const getEntered = (id, token, router) => {
             });
         } else {
             console.log(json.msg, '看看是不是权限的问题');
+            alert(json.msg);
             if (json.msg == -1) {
 
                 Toast.fail("没有权限");

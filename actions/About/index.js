@@ -367,7 +367,7 @@ const getEntered = (id, token, router) => {
             if (json.msg == -1) {
 
                 Toast.fail("您没有登录");
-                return json.msg
+                // return json.msg
             } else {
                 dispatch({
                     type: "PAGE1_USERLIST",

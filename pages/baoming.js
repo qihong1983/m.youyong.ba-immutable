@@ -75,15 +75,22 @@ class Baoming extends Component {
             // console.log(req.headers.cookie, '#####');
 
             console.log(req.headers);
-            req.headers.cookie.split(";").forEach(item => {
-                if (!item) {
-                    return;
-                }
+            console.log(req.headers.cookie, 'cookie');
 
-                if (item.split('=')[0].trim() == 'token') {
-                    token = item.split('=')[1];
-                }
-            })
+            if (req.headers.cookie == undefined) {
+                return;
+            } else {
+                req.headers.cookie.split(";").forEach(item => {
+                    if (!item) {
+                        return;
+                    }
+
+                    if (item.split('=')[0].trim() == 'token') {
+                        token = item.split('=')[1];
+                    }
+                })
+            }
+
         }
 
 
@@ -168,9 +175,12 @@ class Baoming extends Component {
                     classId: this.props.router.query.id
                 }
 
-                await this.props.okBaoming(data, token, this.props.router);
+                let isLogin = await this.props.okBaoming(data, token, this.props.router);
 
-                await this.props.getEntered(this.props.router.query.id, token);
+                if (isLogin != -1) {
+                    await this.props.getEntered(this.props.router.query.id, token);
+
+                }
             } else {
                 Toast.fail('出错了');
             }

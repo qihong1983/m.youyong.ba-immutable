@@ -94,7 +94,8 @@ class Baoming extends Component {
 
         console.log(query.id, token, '#################')
 
-        await store.dispatch(actionCreators.getEntered(query.id, token));
+        let isLogin = await store.dispatch(actionCreators.getEntered(query.id, token));
+
 
         // await this.props.getEntered(query.id, token);
 

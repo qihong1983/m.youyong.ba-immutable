@@ -343,7 +343,7 @@ const okBaoming = (data, token, router) => {
 }
 
 
-const getEntered = (id, token) => {
+const getEntered = (id, token, router) => {
     return async function (dispatch) {
         // let res = await fetch(`http://www.easy-mock.com/mock/5c578cecde5c260cd71d3b63/youyongba/signUpUserList?id=${id}`, {
         // let res = await fetch(`http://localhost:8081/getBaomingList?id=${id}`, {
@@ -365,6 +365,8 @@ const getEntered = (id, token) => {
             });
         } else {
             if (json.msg == -1) {
+
+                Toast.fail("您没有登录");
                 return json.msg
             } else {
                 dispatch({

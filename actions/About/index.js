@@ -364,9 +364,12 @@ const getEntered = (id, token, router) => {
                 payload: json.data
             });
         } else {
+            console.log(json.msg, '看看是不是权限的问题');
             if (json.msg == -1) {
 
-                Toast.fail("您没有登录");
+                Toast.fail("没有权限");
+
+
                 // return json.msg
             } else {
                 dispatch({

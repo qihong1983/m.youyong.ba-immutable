@@ -364,11 +364,10 @@ const getEntered = (id, token, router) => {
                 payload: json.data
             });
         } else {
-            console.log(json.msg, '看看是不是权限的问题');
-            alert(json.msg);
+
             if (json.msg == -1) {
 
-                Toast.fail("没有权限");
+                Toast.fail("没有权限,在次点击报名进入登录页面");
 
 
                 // return json.msg

@@ -77,19 +77,21 @@ class Baoming extends Component {
             console.log(req.headers);
             console.log(req.headers.cookie, 'cookie');
 
-            if (req.headers.cookie == undefined) {
-                return;
-            } else {
-                req.headers.cookie.split(";").forEach(item => {
-                    if (!item) {
-                        return;
-                    }
+            // if (req.headers.cookie == undefined) {
+            //     return;
+            // } else {
+            //     req.headers.cookie.split(";").forEach(item => {
+            //         if (!item) {
+            //             return;
+            //         }
 
-                    if (item.split('=')[0].trim() == 'token') {
-                        token = item.split('=')[1];
-                    }
-                })
-            }
+            //         if (item.split('=')[0].trim() == 'token') {
+            //             token = item.split('=')[1];
+            //         }
+            //     })
+            // }
+
+            token = 'xxx';
 
         }
 

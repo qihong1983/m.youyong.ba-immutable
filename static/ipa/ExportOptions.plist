@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>destination</key>
+	<string>export</string>
+	<key>method</key>
+	<string>app-store</string>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>ba.youyong</key>
+		<string>youyongbaconfig</string>
+	</dict>
+	<key>signingCertificate</key>
+	<string>DD399F03598CE25BBCE3CA41296EDBC21428B6A6</string>
+	<key>signingStyle</key>
+	<string>manual</string>
+	<key>stripSwiftSymbols</key>
+	<true/>
+	<key>teamID</key>
+	<string>BMR227C978</string>
+	<key>uploadSymbols</key>
+	<true/>
+</dict>
+</plist>

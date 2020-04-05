@@ -84,8 +84,6 @@ class Login extends Component {
             count: 60,
             checkVolid: true
         }
-
-
     }
 
     componentWillMount() {
@@ -168,6 +166,9 @@ class Login extends Component {
                 if (this.props.form.getFieldError('phoneNumber') == undefined) {
                     this.props.sendPassword(this.props.form.getFieldValue('phoneNumber'));
                 }
+
+
+
 
 
                 // this.props.form.validateFields((err, values) => {

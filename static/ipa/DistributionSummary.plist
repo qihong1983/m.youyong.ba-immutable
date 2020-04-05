@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>HBuilder.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>armv7</string>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>DD399F03598CE25BBCE3CA41296EDBC21428B6A6</string>
+				<key>dateExpires</key>
+				<string>2021/4/6</string>
+				<key>type</key>
+				<string>iOS Distribution</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>BMR227C978.ba.youyong</string>
+				<key>aps-environment</key>
+				<string>production</string>
+				<key>beta-reports-active</key>
+				<true/>
+				<key>com.apple.developer.team-identifier</key>
+				<string>BMR227C978</string>
+				<key>get-task-allow</key>
+				<false/>
+			</dict>
+			<key>name</key>
+			<string>游泳吧.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>078fcb09-b9dc-423c-8a9b-3dc607ee0df7</string>
+				<key>name</key>
+				<string>youyongbaconfig</string>
+			</dict>
+			<key>symbols</key>
+			<true/>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>BMR227C978</string>
+				<key>name</key>
+				<string>hong qi</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>

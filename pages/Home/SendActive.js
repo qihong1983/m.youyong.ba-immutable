@@ -148,6 +148,10 @@ class SendActive extends Component {
                 var isSuccess = await this.props.sendSwim(data, token, this.props.router);
 
 
+                // if (isSuccess) {
+                     await this.props.sendGetui(data, token, this.props.router);
+                // }
+
                 let params = {
                     offset: 1,
                     keyword: ""

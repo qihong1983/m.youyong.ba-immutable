@@ -8,7 +8,7 @@
   "dependencies": {
     "await-wrap": "^0.1.0",
     "graphql": "^14.0.2",
-    "next": "^7.0.2",
+    "next": "^11.1.0",
     "react": "^16.6.3",
     "react-amap": "^1.2.8",
     "react-dom": "^16.6.3"

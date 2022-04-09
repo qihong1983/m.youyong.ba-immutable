@@ -23,7 +23,7 @@
     "immutable": "~4.0.0-rc.12",
     "isomorphic-unfetch": "~3.0.0",
     "lodash": "~4.17.11",
-    "moment": "~2.22.2",
+    "moment": "~2.29.2",
     "next-compose-plugins": "~2.1.1",
     "next-manifest": "~1.6.0",
     "next-offline": "~3.2.1",
